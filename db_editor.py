@@ -10,7 +10,7 @@ FLAG = 1
 UNFLAG = 0
 
 class Database:
-    def __init__(self, database): #'base_word_info.db'
+    def __init__(self, database): #'word_data.db'
         self.database = database
         self.connection = self.connect()
         self.cursor = self.getCursor()
@@ -216,7 +216,7 @@ class ItemSetter:
     def set_pl_not_pl(self):
         return FLAG if self.plural_de != ptDE.pluralize(self.plural_de) else UNFLAG
 
-def databaseMenu(database='base_word_info.db'):
+def databaseMenu(database='word_data.db'):
     databaseObject = Database(database)
     options = ["1", "2", "3", "4"]
     choice = None
