@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}New Game{% endblock %}
+
+{% block content %}
+<div class="content-container">
+  <div class="content">
+      <h2 class="page-head"> - New Game - </h2>
+      <a class="option" href="{{ url_for('gender') }}">
+        <h1 class="icon">G</h1>
+        <p class="text">Noun Genders. Test your knowledge of noun genders. </p>
+      </a>
+      <a class="option" href="{{ url_for('prepositions') }}">
+        <h1 class="icon">P</h1>
+        <p class="text">Prepositions. Test your knowledge of preposition cases.
+        </p>
+      </a>
+      <a class="option" href="{{ url_for('articles') }}">
+        <h1 class="icon">A</h1>
+        <p class="text">Articles. Test your knowledge of definite, indefinite and possesive articles. </p>
+      </a>
+  </div>
+</div>
+<script src="../static/scripts/new-game.js"></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}Prepositions{% endblock %}
+
+{% block content %}
+<div class="content-container">
+  <div class="content">
+      <h1 class="page-head">Results</h1>
+      <h2 class="result-score"></h2>
+      <div class="display-menu">
+        <div class="display-option all-res">All results</div>
+        <div class="display-option inc-res">Incorrect only</div>
+      </div>
+      <table class="result-table"></table>
+  </div>
+</div>
+<script src="../static/scripts/results.js"></script>
+{% endblock %}

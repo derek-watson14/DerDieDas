@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset='UTF-8'/>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/styles.css') }}">
+  </head>
+  <body>
+    <div class="navbar-container">
+      <nav class="navbar">
+        <a class="navlogo" href="{{ url_for('newGame') }}">
+          <span class="logoder">Der</span><span class="logodie">Die</span><span class="logodas">Das</span>
+        </a>
+        <div class="navlinks">
+          {% if request.url_rule.rule == "/about" %}
+            <a class="active" href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('newGame') }}">New Game</a>
+          {% else %}
+            <a href="{{ url_for('about') }}">About</a>
+            <a class="active" href="{{ url_for('newGame') }}">New Game</a>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Prepositions{% endblock %}
+
+{% block active %}
+  <a href="{{ url_for('about') }}">About</a>
+  <a class="active" href="{{ url_for('newGame') }}">New Game</a>
+{% endblock %}
+
+{% block content %}
+<div class="content-container">
+  <div class="content">
+    <div class="information">
+      <div class="score"></div>
+      <div class="message-container">
+        <div class="message"></div>
+        <div class="tip"></div>
+      </div>
+    </div>
+    <div class="word-display">
+      <h1 class="current"></h1>
+      <h1 class="prep-case blank">ist _____</h1>
+    </div>
+    <div class="choices">
+      <div>
+        <div class="choice akk">1. Accusative</div>
+        <div class="choice dat">2. Dative</div>
+      </div>
+      <div>
+        <div class="choice mix">3. Two-Way</div>
+        <div class="choice gen">4. Genitive</div>
+      </div>
+    </div>
+    <p class="note">Tip: Play using the keyboard. Enter for Next.</p>
+    <div class="controls">
+      <a class="control results" href="{{ url_for('results') }}">Results</a>
+      <div class="control next">Next</div>
+    </div>
+  </div>
+</div>
+<script src="../static/scripts/prepositions.js"></script>
+<script src="../static/scripts/games.js"></script>
+{% endblock %}
