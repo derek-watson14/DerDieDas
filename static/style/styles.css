@@ -46,7 +46,7 @@ td, th { padding: 30px; }
 .information { display: flex; justify-content: space-between; width: 85%; height: 65px; margin: 15px 0px; font-size: 1.25em; }
 .score { font-weight: bold; }
 .message-container { text-align: right; }
-.tip { font-size: 0.8em; width: 200px; }
+.tip { font-size: 0.8em; width: 100%; }
 /* Question Display */
 .word-display { width: 100%; display: flex; justify-content: center; padding: 25px 0px 25px 0px; font-size: 1.6em; margin-bottom: 20px; }
 .correct { color: green; font-style: normal; }
@@ -77,6 +77,12 @@ td, th { padding: 30px; }
 .der { background-color: lightblue; width: 100px; }
 .die { background-color: lightcoral; width: 100px; }
 .das { background-color: lightyellow; width: 100px; }
+
+/* Game: Endings */
+.no-blank { margin-left: 15px; }
+.mann { background-color: lightblue; width: 150px; }
+.weib { background-color: lightcoral; width: 150px; }
+.neut { background-color: lightyellow; width: 150px; }
 
 
 /* POTENTIAL FORM CSS
