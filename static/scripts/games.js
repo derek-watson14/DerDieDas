@@ -14,7 +14,7 @@ class PageState {
     setCurrent() {
       this.current = this.set[Math.floor(Math.random() * this.setSize)];
       if (this.shown.includes(this.current)) {
-        this.setPrep();
+        this.setCurrent();
       } else {
         this.addToShown(this.current);
         document.querySelectorAll('.current')[0].innerHTML = this.current[1];
@@ -76,10 +76,11 @@ function checkAnswer(answer, key) {
 
 function generateTip() {
   if (game.gameType == "gender") {
-    let tip = suffixDisplay();
-    document.querySelectorAll('.tip')[0].innerHTML = tip;
+    document.querySelectorAll('.tip')[0].innerHTML = suffixDisplay();
+  } else if (game.gameType == "endings") {
+    document.querySelectorAll('.tip')[0].innerHTML = generateExample(game.current);
   } else {
-    document.querySelectorAll('.tip')[0].innerHTML = ""
+    document.querySelectorAll('.tip')[0].innerHTML = "";
   };
 };
 
