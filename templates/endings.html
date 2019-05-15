@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Geschlechtsmuster{% endblock %}
+
+{% block content %}
+<div class="content-container">
+  <div class="content">
+      <div class="information">
+        <div class="score"></div>
+        <div class="message-container">
+          <div class="message"></div>
+          <div class="tip end-tip"></div>
+        </div>
+      </div>
+      <div class="word-display">
+        <h1 class="current"></h1>
+        <h1 class="no-blank blank"></h1>
+      </div>
+      <div class="choices">
+        <div class="choice mann">1. Männliche</div>
+        <div class="choice weib">2. Weibliche</div>
+        <div class="choice neut">3. Neutral</div>
+      </div>
+      <p class="note">Tip: Play using the keyboard. Enter for Next.</p>
+      <div class="controls">
+        <a class="control results" href="{{ url_for('results') }}">Results</a>
+        <div class="control next">Next</div>
+      </div>
+  </div>
+</div>
+<script src="../static/scripts/endings.js"></script>
+<script src="../static/scripts/games.js"></script>
+{% endblock %}
