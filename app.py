@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
+app.config['TESTING'] = True
 
 @app.route("/")
 def newGame():
@@ -13,6 +14,10 @@ def about():
 @app.route("/endings")
 def endings():
   return render_template("endings.html")
+
+@app.route("/articles")
+def articles():
+  return render_template("articles.html")
 
 @app.route("/gender")
 def gender():
