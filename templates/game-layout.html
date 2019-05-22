@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset='UTF-8'/>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/styles.css') }}">
+  </head>
+  <body>
+    <div class="navbar-container">
+      <nav class="navbar">
+        <a class="navlogo" href="{{ url_for('newGame') }}">
+          <span class="logoder">Der</span><span class="logodie">Die</span><span class="logodas">Das</span>
+        </a>
+        <div class="navlinks">
+          {% if request.url_rule.rule == "/about" %}
+            <a class="active" href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('newGame') }}">New Game</a>
+          {% else %}
+            <a href="{{ url_for('about') }}">About</a>
+            <a class="active" href="{{ url_for('newGame') }}">New Game</a>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+    {% block gameSpecific %}
+    {% endblock %}
+      <p class="note">Tip: Play using the keyboard. Enter for Next.</p>
+      <div class="controls">
+        <a class="control results" href="{{ url_for('results') }}">Results</a>
+        <div class="control info-btn">Game Info</div>
+        <div class="control next">Next</div>
+      </div>
+      <div class="overlay">
+        <div class="info-container">
+          <h1 class="info-head">Game Information </h1>
+          <p class="info-text">Use the keys 1 to 4 to play with the keyboard, press Enter for next. Score is displayed in the upper left
+            hand corner. The results button ends the game and will display which answers were right and wrong. 
+          </p>
+        </div>
+      </div>
+    </div>
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>
