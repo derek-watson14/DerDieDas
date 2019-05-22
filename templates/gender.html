@@ -1,8 +1,8 @@
-{% extends "layout.html" %}
+{% extends "game-layout.html" %}
 
 {% block title %}Genders{% endblock %}
 
-{% block content %}
+{% block gameSpecific %}
 <div class="content-container">
   <div class="content">
       <div class="information">
@@ -16,18 +16,14 @@
         <h1 class="article blank">____</h1>
         <h1 class="current"></h1>
       </div>
+      <h4 class="hint"></h4>
       <div class="choices">
         <div class="choice der">1. der</div>
         <div class="choice die">2. die</div>
         <div class="choice das">3. das</div>
       </div>
-      <p class="note">Tip: Play using the keyboard. Enter for Next.</p>
-      <div class="controls">
-        <a class="control results" href="{{ url_for('results') }}">Results</a>
-        <div class="control next">Next</div>
-      </div>
-  </div>
-</div>
+{% endblock %}
+{% block scripts %}
 <script src="../static/scripts/wordlist.js"></script>
 <script src="../static/scripts/gender.js"></script>
 <script src="../static/scripts/games.js"></script>

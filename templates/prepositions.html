@@ -1,12 +1,8 @@
-{% extends "layout.html" %}
+{% extends "game-layout.html" %}
+
 {% block title %}Prepositions{% endblock %}
 
-{% block active %}
-  <a href="{{ url_for('about') }}">About</a>
-  <a class="active" href="{{ url_for('newGame') }}">New Game</a>
-{% endblock %}
-
-{% block content %}
+{% block gameSpecific %}
 <div class="content-container">
   <div class="content">
     <div class="information">
@@ -20,6 +16,7 @@
       <h1 class="current"></h1>
       <h1 class="prep-case blank">ist _____</h1>
     </div>
+    <h4 class="hint"></h4>
     <div class="choices">
       <div>
         <div class="choice akk">1. Accusative</div>
@@ -30,13 +27,8 @@
         <div class="choice gen">4. Genitive</div>
       </div>
     </div>
-    <p class="note">Tip: Play using the keyboard. Enter for Next.</p>
-    <div class="controls">
-      <a class="control results" href="{{ url_for('results') }}">Results</a>
-      <div class="control next">Next</div>
-    </div>
-  </div>
-</div>
+{% endblock %}
+{% block scripts %}
 <script src="../static/scripts/prepositions.js"></script>
 <script src="../static/scripts/games.js"></script>
 {% endblock %}
