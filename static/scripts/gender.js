@@ -2,7 +2,6 @@
 let DER = 0, DIE = 1, DAS = 2;
 let key = ["der", "die", "das"];
 let genders = ["masculine", "feminine", "neutral"];
-let setSize = set.length;
 let gameType = "gender";
 let blank = "____";
 
@@ -33,22 +32,12 @@ function suffixDisplay() {
   }
 };
 
-// Event Listeners: 
-document.querySelectorAll('.der')[0].onclick = function() {
-  checkAnswer(DER, key);
+function answerDisplay(answer, correctness) {
+  if (correctness) {
+    document.querySelectorAll('.blank')[0].innerHTML = `<em class='correct'>${key[answer]}</em>`;
+    document.querySelectorAll('.message')[0].innerHTML = `Correct! You chose <em class='correct'>${key[answer]}</em>.`;
+  } else {
+    document.querySelectorAll('.blank')[0].innerHTML = `<em class='incorrect'>${key[game.current[0]]}</em>`;
+    document.querySelectorAll('.message')[0].innerHTML = `Incorrect. You chose <em class='incorrect'>${key[answer]}</em>.`;
+  }
 };
-
-document.querySelectorAll('.die')[0].onclick = function() {
-  checkAnswer(DIE, key);
-};
-
-document.querySelectorAll('.das')[0].onclick = function() {
-  checkAnswer(DAS, key);
-};
-
-addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) resetFields();
-  else if (event.keyCode === 49) checkAnswer(DER, key);
-  else if (event.keyCode === 50) checkAnswer(DIE, key);
-  else if (event.keyCode === 51) checkAnswer(DAS, key);
-});

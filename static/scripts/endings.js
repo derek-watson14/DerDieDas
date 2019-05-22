@@ -1,5 +1,5 @@
 let DER = 0, DIE = 1, DAS = 2;
-let key = ["Männliche", "Weibliche", "Neutral"];
+let key = ["Maskulin", "Feminin", "Neutral"];
 let articles = ["der", "die", "das"];
 // \[\d, \"[\wä -]+"\],      <-- RegEx to select one entry 
 
@@ -12,31 +12,23 @@ let set =  [[0, "Jahreszeiten", "Sommer"], [0, "Himmelsrichtungen", "Süden"], [
             [2, "Nomen Infivitiven", "Laufen"], [2, "-zimmer", "Schlafzimmer"], [2, "-mittel", "Verkehrsmittel"],[2, "-chen", "Mädchen"], [2, "-lein", "Vöglein"], [2, "-ment", "Element"], [2, "-haus", "Hochhaus"],
             [2, "-zeug", "Werkzeug"], [2, "-land", "Heimatland"], [2, "-rad", "Fahrrad"], [2, "-weh", "Heimweh"], [2, "-amt", "Postamt"], [2, "-tum", "Datum"], [2, "-ma", "Thema"], [2, "-ing", "Meeting"]];
 
-let setSize = set.length;
 let gameType = "endings";
 let blank = "";
 
 function generateExample(current) {
-  let example = `z. B. <strong>${articles[current[0]]} ${current[2]}</strong>`
-  return example;
+  return `z. B. <strong>${articles[current[0]]} ${current[2]}</strong>`;
 };
 
-// Event Listeners: 
-document.querySelectorAll('.mann')[0].onclick = function() {
-  checkAnswer(DER, key);
+function generateHint(current) {
+  return `z. B. "<strong>${current[2]}</strong>"`;  
 };
 
-document.querySelectorAll('.weib')[0].onclick = function() {
-  checkAnswer(DIE, key);
+function answerDisplay(answer, correctness) {
+  if (correctness) {
+    document.querySelectorAll('.blank')[0].innerHTML = `: <em class='correct'>${game.key[answer]}</em>`;
+    document.querySelectorAll('.message')[0].innerHTML = `Correct! You chose <em class='correct'>${game.key[answer]}</em>.`;
+  } else {
+    document.querySelectorAll('.blank')[0].innerHTML = `: <em class='incorrect'>${game.key[game.current[0]]}</em>`;
+    document.querySelectorAll('.message')[0].innerHTML = `Incorrect. You chose <em class='incorrect'>${game.key[answer]}</em>.`;
+  };
 };
-
-document.querySelectorAll('.neut')[0].onclick = function() {
-  checkAnswer(DAS, key);
-};
-
-addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) resetFields();
-  else if (event.keyCode === 49) checkAnswer(DER, key);
-  else if (event.keyCode === 50) checkAnswer(DIE, key);
-  else if (event.keyCode === 51) checkAnswer(DAS, key);
-});

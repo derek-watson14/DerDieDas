@@ -1,15 +1,26 @@
+// Make page state into a prototype, and make subclasses for each gametype that add features as needed!
+// Create relational database with the data and load necessary info with python application
+// Design for mobile with media queries, update overall look
+// Create game type description that can pop up as overlay
+// 
+
 class PageState {
-    constructor(gameType, set, setSize) {
+    constructor(gameType, set, key) {
       this.gameType = gameType;
       this.set = set;
-      this.setSize = setSize;
+      this.setSize = set.length;
+      this.key = key;
+      this.keySize = key.length;
       this.correct = 0;
       this.attempts = 0;
       this.answered = false;
+      this.gameInfo = false;
       this.shown = [];
       this.current;
+      this.hotkeys = [];
       this.setCurrent();
       this.setScore();
+      this.setControlButtons();
     };
     setCurrent() {
       this.current = this.set[Math.floor(Math.random() * this.setSize)];
@@ -17,8 +28,21 @@ class PageState {
         this.setCurrent();
       } else {
         this.addToShown(this.current);
+        this.detectGameType();
+        this.setButtonListeners();
+        this.setHotkeys();
+      };
+    };
+    detectGameType() {
+      if (this.gameType == "gender" || this.gameType == "preps") {
         document.querySelectorAll('.current')[0].innerHTML = this.current[1];
-      }
+      } else if (this.gameType == "endings") {
+        document.querySelectorAll('.current')[0].innerHTML = this.current[1];
+        document.querySelectorAll('.hint')[0].innerHTML = generateHint(this.current);
+      } else if (this.gameType == "articles") {
+        document.querySelectorAll('.current')[0].innerHTML = generateQuestion(this.current);
+        this.setOptions();
+      };
     };
     setScore() {
       document.querySelectorAll('.score')[0].innerHTML = `${this.correct}/${this.attempts}: ${this.getPercentage()}%`;
@@ -34,8 +58,83 @@ class PageState {
       this.shown.push(item);
     };
     continue() {
-      if (this.attempts < this.setSize) return true;
+      if (game.attempts < this.setSize) return true;
       else return false;
+    };
+    genOptions() {
+      let options = [];
+      options.push(this.key[this.current[0]]);
+      while (options.length < document.querySelectorAll('.choice').length) {
+        let falseChoice = this.key[Math.floor(Math.random() * this.keySize)];
+        if (falseChoice != this.key[this.current[0]]) options.push(falseChoice);
+      };
+      return options;
+    };
+    genChoiceDisplay() {
+      let options = this.genOptions();
+      let optDisplay = document.querySelectorAll('.choice');
+      for (let item = 0; item < optDisplay.length; item++) {
+        let randomElement = Math.floor(Math.random() * options.length);
+        let artk = options.splice(randomElement, 1);
+        optDisplay[item].innerHTML = `${item + 1}. ${artk}`;
+      };
+    };
+    setOptions() {
+      if (this.gameType == "articles") {
+        this.genChoiceDisplay();
+      };
+    };
+    setButtonListeners() {
+      let choices = document.querySelectorAll('.choice');
+      for (let choice of choices) {
+        let answer = choice.innerHTML.substr(3);
+        this.hotkeys.push(answer);
+        choice.onclick = function() {
+          checkAnswer(key.indexOf(answer));
+        };
+      };
+    };
+    setControlButtons() {
+      document.querySelectorAll('.next')[0].onclick = function() {
+        resetFields();
+      };
+      document.querySelectorAll('.results')[0].onclick = function() {
+        displayResults();
+      };
+      document.querySelectorAll('.info-btn')[0].onclick = function() {
+        if (game.gameInfo == false) {
+          document.querySelectorAll('.overlay')[0].style.display = "block";
+          game.gameInfo = true;
+        };
+      };
+      document.querySelectorAll('.overlay')[0].onclick = function() {
+        if (game.gameInfo == true) {
+          document.querySelectorAll('.overlay')[0].style.display = "none";
+          game.gameInfo = false;
+        }
+      };
+      addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) resetFields();
+        if (event.keyCode == 79 && game.gameInfo == false) {
+          document.querySelectorAll('.overlay')[0].style.display = "block";
+          game.gameInfo = true;
+        } else if (event.keyCode == 79 && game.gameInfo == true) {
+          document.querySelectorAll('.overlay')[0].style.display = "none";
+          game.gameInfo = false;
+        };
+      });
+    };
+    setHotkeys() {
+      for (let i = 0, h = 49; i < this.hotkeys.length; i++, h++) {
+        this.createHotkeyListener(i, h);
+      };
+    };
+    createHotkeyListener(arrayElement, hotkey) {
+      addEventListener("keyup", function(event) {
+        if (event.keyCode == hotkey) {
+          checkAnswer(key.indexOf(game.hotkeys[arrayElement]));
+        }; 
+      });
     };
 };
 
@@ -50,35 +149,39 @@ class questionRecord {
 };
 
 // setSize and gameType found in extra JS docs for game types
-let game = new PageState(gameType, set, setSize);
+let game = new PageState(gameType, set, key);
 let record = new questionRecord();
 
-function checkAnswer(answer, key) {
+function checkAnswer(answer) {
   if (!game.answered) {
-    let correctness = null;
-    if (answer == game.current[0]) {
-      document.querySelectorAll('.blank')[0].innerHTML = `<em class='correct'>${key[answer]}</em>`;
-      document.querySelectorAll('.message')[0].innerHTML = `Correct! You chose <em class='correct'>${key[answer]}</em>.`;
-      game.correct += 1;
-      correctness = true;
-    } else {
-      document.querySelectorAll('.blank')[0].innerHTML = `<em class='incorrect'>${key[game.current[0]]}</em>`;
-      document.querySelectorAll('.message')[0].innerHTML = `Incorrect. You chose <em class='incorrect'>${key[answer]}</em>.`;
-      correctness = false;
-      generateTip();
-    };
+    let correctness = testCorrectness(answer);
+    generateTip(correctness);
+    answerDisplay(answer, correctness);
     game.attempts += 1;
-    record.addAttempt(answer, game.current[0], game.current[1], correctness);
     game.setScore();
+    record.addAttempt(answer, game.current[0], game.current[1], correctness);
     game.answered = true;
   };
 };
 
-function generateTip() {
-  if (game.gameType == "gender") {
-    document.querySelectorAll('.tip')[0].innerHTML = suffixDisplay();
-  } else if (game.gameType == "endings") {
-    document.querySelectorAll('.tip')[0].innerHTML = generateExample(game.current);
+function testCorrectness(answer) {
+  if (answer == game.current[0]) {
+    game.correct += 1;
+    return true;
+  } else {
+    return false;
+  }
+};
+
+function generateTip(correctness) {
+  if (!correctness) {
+    if (game.gameType == "gender") {
+      document.querySelectorAll('.tip')[0].innerHTML = suffixDisplay();
+    } else if (game.gameType == "endings") {
+      document.querySelectorAll('.tip')[0].innerHTML = generateExample(game.current);
+    } else if (game.gameType == "preps") {
+      document.querySelectorAll('.tip')[0].innerHTML = "";
+    };
   } else {
     document.querySelectorAll('.tip')[0].innerHTML = "";
   };
@@ -101,12 +204,4 @@ function resetFields() {
   } else {
     displayResults();
   }
-};
-
-document.querySelectorAll('.next')[0].onclick = function() {
-  resetFields();
-};
-
-document.querySelectorAll('.results')[0].onclick = function() {
-  displayResults();
 };
