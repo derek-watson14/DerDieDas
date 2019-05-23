@@ -23,12 +23,13 @@ class PageState {
       this.setControlButtons();
     };
     setCurrent() {
-      this.current = this.set[Math.floor(Math.random() * this.setSize)];
+      this.current = this.set[randElement(this.setSize)];
       if (this.shown.includes(this.current)) {
         this.setCurrent();
       } else {
         this.addToShown(this.current);
         this.detectGameType();
+        this.setOptions();
         this.setButtonListeners();
         this.setHotkeys();
       };
@@ -41,7 +42,6 @@ class PageState {
         document.querySelectorAll('.hint')[0].innerHTML = generateHint(this.current);
       } else if (this.gameType == "articles") {
         document.querySelectorAll('.current')[0].innerHTML = generateQuestion(this.current);
-        this.setOptions();
       };
     };
     setScore() {
@@ -61,38 +61,43 @@ class PageState {
       if (game.attempts < this.setSize) return true;
       else return false;
     };
-    genOptions() {
-      let options = [];
-      options.push(this.key[this.current[0]]);
+    genOptionsRandom() {
+      let options = [this.key[this.current[0]]];
       while (options.length < document.querySelectorAll('.choice').length) {
-        let falseChoice = this.key[Math.floor(Math.random() * this.keySize)];
-        if (falseChoice != this.key[this.current[0]]) options.push(falseChoice);
+        let falseChoice = this.key[randElement(this.keySize)];
+        if (!options.includes(falseChoice)) options.push(falseChoice);
       };
       return options;
     };
-    genChoiceDisplay() {
-      let options = this.genOptions();
-      let optDisplay = document.querySelectorAll('.choice');
-      for (let item = 0; item < optDisplay.length; item++) {
-        let randomElement = Math.floor(Math.random() * options.length);
-        let artk = options.splice(randomElement, 1);
-        optDisplay[item].innerHTML = `${item + 1}. ${artk}`;
-      };
+    genChoiceDisplayRandom() {
+      let options = this.genOptionsRandom();
+      document.querySelectorAll('.choice').forEach(function(choice, index) {
+        choice.innerHTML = `${index + 1}. ${options.splice(randElement(options.length), 1)}`;
+      });
     };
     setOptions() {
       if (this.gameType == "articles") {
+        this.genChoiceDisplayRandom();
+      } else {
         this.genChoiceDisplay();
       };
     };
+    genChoiceDisplay() {
+      let counter = 0;
+      let key = this.key;
+      document.querySelectorAll('.choice').forEach(function(button) {
+        button.innerHTML = `${counter + 1}. ${key[counter]}`;
+        counter++;
+      });
+    };
     setButtonListeners() {
-      let choices = document.querySelectorAll('.choice');
-      for (let choice of choices) {
-        let answer = choice.innerHTML.substr(3);
-        this.hotkeys.push(answer);
+      let hotkeys = this.hotkeys;
+      document.querySelectorAll('.choice').forEach(function(choice) {
+        hotkeys.push(choice.innerHTML.substr(3))
         choice.onclick = function() {
-          checkAnswer(key.indexOf(answer));
+          checkAnswer(key.indexOf(choice.innerHTML.substr(3)))
         };
-      };
+      });
     };
     setControlButtons() {
       document.querySelectorAll('.next')[0].onclick = function() {
@@ -204,4 +209,8 @@ function resetFields() {
   } else {
     displayResults();
   }
+};
+
+function randElement(length) {
+  return Math.floor(Math.random() * length);
 };
