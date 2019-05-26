@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+import json
+from keys_sets import *
 
 app = Flask(__name__)
 app.config['TESTING'] = True
@@ -13,19 +15,23 @@ def about():
 
 @app.route("/endings")
 def endings():
-  return render_template("endings.html")
+  endingGt = "endings"
+  return render_template("endings.html", key=endingKey, wordSet=endingSet, gameType=endingGt)
 
 @app.route("/articles")
 def articles():
-  return render_template("articles.html")
+  articleGt = "articles"
+  return render_template("articles.html", key=articleKey, wordSet=articleSet, gameType=articleGt)
 
 @app.route("/gender")
 def gender():
-  return render_template("gender.html")
+  genderGt = "gender"
+  return render_template("gender.html", key=genderKey, wordSet=genderSet, gameType=genderGt)
 
 @app.route("/prepositions")
 def prepositions():
-  return render_template("prepositions.html")
+  prepGt = "preps"
+  return render_template("prepositions.html", key=prepKey, wordSet=prepSet, gameType=prepGt)
 
 @app.route("/results")
 def results():
