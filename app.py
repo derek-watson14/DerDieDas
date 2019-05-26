@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import json
-from keys_sets import *
+from game_data import *
 
 app = Flask(__name__)
 app.config['TESTING'] = True
