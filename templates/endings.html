@@ -24,6 +24,30 @@
       </div>
 {% endblock %}
 {% block scripts %}
-<script src="../static/scripts/endings.js"></script>
-<script src="../static/scripts/games.js"></script>
+  <script type="text/javascript" src="../static/scripts/games.js"></script>
+  <script type="text/javascript">
+    let articles = ["der", "die", "das"];
+    let blank = "";
+
+    function generateExample(current) {
+      return `z. B. <strong>${articles[current[0]]} ${current[2]}</strong>`;
+    };
+    
+    function generateHint(current) {
+      return `z. B. "<strong>${current[2]}</strong>"`;  
+    };
+    
+    function answerDisplay(answer, correctness) {
+      if (correctness) {
+        document.querySelectorAll('.blank')[0].innerHTML = `: <em class='correct'>${game.key[answer]}</em>`;
+        document.querySelectorAll('.message')[0].innerHTML = `Correct! You chose <em class='correct'>${game.key[answer]}</em>.`;
+      } else {
+        document.querySelectorAll('.blank')[0].innerHTML = `: <em class='incorrect'>${game.key[game.current[0]]}</em>`;
+        document.querySelectorAll('.message')[0].innerHTML = `Incorrect. You chose <em class='incorrect'>${game.key[answer]}</em>.`;
+      };
+    };
+
+    let record = new questionRecord();
+    let game = new PageState('{{ gameType }}', JSON.parse('{{ wordSet|tojson|safe }}'), JSON.parse('{{ key|tojson|safe }}'));
+  </script>
 {% endblock %}
