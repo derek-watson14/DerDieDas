@@ -19,16 +19,13 @@ class PageState {
       this.current;
       this.hotkeys = [];
       this.setCurrent();
-      this.setHotkeys();
     };
 
     // Setting and Resetting the Page: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     setCurrent() {
       this.current = this.getCurrent();
-      console.log(this.current);
       this.setView();
-      this.setButtons();
       this.generateHotkeyList();
     };
     resetFields() {
@@ -53,11 +50,10 @@ class PageState {
     // Operational and Mechanical Functions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     checkAnswer(answer) {
-      console.log(answer);
       if (!this.answered) {
         let correctness = this.testCorrectness(answer);
         this.displayTip(correctness);
-        answerDisplay(answer, correctness);
+        this.displayAsnwer(answer, correctness);
         this.attempts += 1;
         this.displayScore();
         record.addAttempt(answer, this.current[0], this.current[1], correctness);
@@ -72,13 +68,21 @@ class PageState {
     };
     getCurrent() {
       let current = this.set[randomElement(this.setSize)];
-      console.log("gen function", current);
       if (this.shown.includes(current)) {
         return this.getCurrent();
       } else {
         this.shown.push(this.current);
         return current;
       };
+    };
+    interpretChoice(element) {
+      this.checkAnswer(game.key.indexOf(element.innerHTML.substr(3)));
+    };
+    generateHotkeyList() {
+      let hotkeys = this.hotkeys;
+      document.querySelectorAll('.choice').forEach(function(choice) {
+        hotkeys.push(choice.innerHTML.substr(3))
+      });
     };
 
     // Display/View: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -99,11 +103,8 @@ class PageState {
       };
     };
     displayChoices() {
-      if (this.gameType == "articles") {
-        this.randomChoices();
-      } else {
-        this.presetChoices();
-      };
+      if (this.gameType == "articles") this.randomChoices();
+      else this.presetChoices();
     };
     randomChoices() {
       let options = this.generateRandomChoices();
@@ -120,93 +121,42 @@ class PageState {
       return options;
     };
     presetChoices() {
-      let counter = 0;
       let key = this.key; 
-      document.querySelectorAll('.choice').forEach(function(button) {
-        button.innerHTML = `${counter + 1}. ${key[counter]}`;
-        counter++;
+      document.querySelectorAll('.choice').forEach(function(choice, index) {
+        choice.innerHTML = `${index + 1}. ${key[index]}`;
       });
+    };
+    displayAsnwer(answer, correctness) {
+      if (correctness) {
+        document.querySelectorAll('.blank')[0].innerHTML = this.prefix() + `<em class='correct'>${this.key[answer]}</em>`;
+        document.querySelectorAll('.message')[0].innerHTML = `Correct! You chose <em class='correct'>${this.key[answer]}</em>.`;
+      } else {
+        document.querySelectorAll('.blank')[0].innerHTML = this.prefix() + `<em class='incorrect'>${this.key[this.current[0]]}</em>`;
+        document.querySelectorAll('.message')[0].innerHTML = `Incorrect. You chose <em class='incorrect'>${this.key[answer]}</em>.`;
+      }
+    };
+    prefix() {
+      if (this.gameType == "endings") return ": ";
+      else if (this.gameType == "preps") return "ist ";
+      else return "";
     };
     displayScore() {
       document.querySelectorAll('.score')[0].innerHTML = `${this.correct}/${this.attempts}: ${calcPercentage(this.correct, this.attempts)}%`;
     };
     displayTip(isCorrect) {
+      let tip = document.querySelectorAll('.tip')[0];
       if (!isCorrect) {
-        if (this.gameType == "gender") {
-          document.querySelectorAll('.tip')[0].innerHTML = suffixDisplay();
-        } else if (this.gameType == "endings") {
-          document.querySelectorAll('.tip')[0].innerHTML = generateExample(game.current);
-        } else if (this.gameType == "preps") {
-          document.querySelectorAll('.tip')[0].innerHTML = "";
-        };
+        if (this.gameType == "gender") tip.innerHTML = suffixDisplay();
+        else if (this.gameType == "endings") tip.innerHTML = generateExample(game.current);
       } else {
-        document.querySelectorAll('.tip')[0].innerHTML = "";
+        tip.innerHTML = "";
       };
     };
-
-    // Hotkey Related Functions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    
-    setHotkeys() {
-      this.setChoiceHotkeys();
-      this.setControlHotkeys();
-    };
-    generateHotkeyList() {
-      let hotkeys = this.hotkeys;
-      document.querySelectorAll('.choice').forEach(function(choice) {
-        hotkeys.push(choice.innerHTML.substr(3))
-      });
-    };
-    setChoiceHotkeys() {
-      for (let index = 0, key = 49; index < this.hotkeys.length; index++, key++) {
-        window.addEventListener("keyup", function(event) {
-          if (event.keyCode == key) game.checkAnswer(game.key.indexOf(game.hotkeys[index]));
-        });
-      };
-    };
-    setControlHotkeys() {
-      window.addEventListener("keyup", function(event) {
-        if (event.keyCode == 13) game.resetFields();
-      });
-      window.addEventListener("keyup", function(event) {
-        if (event.keyCode == 79 && game.gameInfo == false) {
-          document.querySelectorAll('.overlay')[0].style.display = "block";
-          game.gameInfo = true;
-        } else if (event.keyCode == 79 && game.gameInfo == true) {
-          document.querySelectorAll('.overlay')[0].style.display = "none";
-          game.gameInfo = false;
-        };
-      });
-    };
-
-    // Button Related Functions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    setButtons() {
-      this.setChoiceButtons();
-      this.setControlButtons();
-    }
-    setChoiceButtons() {
-      document.querySelectorAll('.choice').forEach(function(choice) {
-        choice.onclick = function() { game.checkAnswer(game.key.indexOf(choice.innerHTML.substr(3))) };
-      });
-    };
-    setControlButtons() {
-      document.querySelectorAll('.next')[0].onclick = function() {
-        game.resetFields();
-      };
-      document.querySelectorAll('.results')[0].onclick = function() {
-        game.displayResults();
-      };
-      document.querySelectorAll('.info-btn')[0].onclick = function() {
-        if (game.gameInfo == false) {
-          document.querySelectorAll('.overlay')[0].style.display = "block";
-          game.gameInfo = true;
-        };
-      };
-      document.querySelectorAll('.overlay')[0].onclick = function() {
-        if (game.gameInfo == true) {
-          document.querySelectorAll('.overlay')[0].style.display = "none";
-          game.gameInfo = false;
-        }
-      };
+    toggleOverlay() {
+      let overlay = document.querySelectorAll('.overlay')[0];
+      if (game.gameInfo) overlay.style.display = "none";
+      else overlay.style.display = "block";
+      game.gameInfo = !game.gameInfo;
     };
 };
 
@@ -229,4 +179,36 @@ function randomElement(setSize) {
 function calcPercentage(correct, attempts) {
   if (attempts > 0) return Math.round((correct / attempts) * 100);
   else return 0;
+};
+
+function setHotkeys() {
+  setChoiceHotkeys();
+  setOverlayHotkeys();
+  setNextHotkey();
+};
+
+function setChoiceHotkeys() {
+  for (let index = 0, key = 49; index < game.hotkeys.length; index++, key++) {
+    window.addEventListener("keyup", function(event) {
+      if (event.keyCode == key) game.checkAnswer(game.key.indexOf(game.hotkeys[index]));
+    });
+  };
+};
+
+function setNextHotkey() {
+  window.addEventListener("keyup", function(event) {
+    if (event.keyCode == 13) game.resetFields();
+  });
+};
+
+function setOverlayHotkeys() {
+  window.addEventListener("keyup", function(event) {
+    if (event.keyCode == 79 && !game.gameInfo) {
+      document.querySelectorAll('.overlay')[0].style.display = "block";
+      game.gameInfo = true;
+    } else if (event.keyCode == 79 && game.gameInfo) {
+      document.querySelectorAll('.overlay')[0].style.display = "none";
+      game.gameInfo = false;
+    };
+  });
 };
