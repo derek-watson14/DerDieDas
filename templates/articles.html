@@ -18,18 +18,17 @@
     </div>
     <div class="choices">
       <div>
-        <div class="choice rand-a"></div>
-        <div class="choice rand-b"></div>
+        <div class="choice rand-a" onclick="game.interpretChoice(this)"></div>
+        <div class="choice rand-b" onclick="game.interpretChoice(this)"></div>
       </div>
       <div>
-        <div class="choice rand-c"></div>
-        <div class="choice rand-d"></div>
+        <div class="choice rand-c" onclick="game.interpretChoice(this)"></div>
+        <div class="choice rand-d" onclick="game.interpretChoice(this)"></div>
       </div>
     </div>
 {% endblock %}
 
-{% block scripts %}
-  <script type="text/javascript" src="../static/scripts/games.js"></script>
+{% block uniqueJS %}
   <script type="text/javascript">
     // Custom functions and data for this gametype
     let articleTypes = ["definite", "indefinite"];
@@ -41,18 +40,5 @@
       let question = `<span class="cap">${genders[item[2]]}</span> ${articleTypes[item[1]]} article in ${cases[item[3]]}: `;
       return question;
     }
-
-    function answerDisplay(answer, correctness) {
-      if (correctness) {
-        document.querySelectorAll('.blank')[0].innerHTML = `<em class='correct'>${game.key[answer]}</em>`;
-        document.querySelectorAll('.message')[0].innerHTML = `Correct! You chose <em class='correct'>${game.key[answer]}</em>.`;
-      } else {
-        document.querySelectorAll('.blank')[0].innerHTML = `<em class='incorrect'>${game.key[game.current[0]]}</em>`;
-        document.querySelectorAll('.message')[0].innerHTML = `Incorrect. You chose <em class='incorrect'>${game.key[answer]}</em>.`;
-      };
-    };
-
-    let record = new questionRecord();
-    let game = new PageState('{{ gameType }}', JSON.parse('{{ wordSet|tojson|safe }}'), JSON.parse('{{ key|tojson|safe }}'));
   </script>
 {% endblock %}

@@ -18,13 +18,12 @@
       </div>
       <h4 class="hint"></h4>
       <div class="choices">
-        <div class="choice mann"></div>
-        <div class="choice weib"></div>
-        <div class="choice neut"></div>
+        <div class="choice mann" onclick="game.interpretChoice(this)"></div>
+        <div class="choice weib" onclick="game.interpretChoice(this)"></div>
+        <div class="choice neut" onclick="game.interpretChoice(this)"></div>
       </div>
 {% endblock %}
-{% block scripts %}
-  <script type="text/javascript" src="../static/scripts/games.js"></script>
+{% block uniqueJS %}
   <script type="text/javascript">
     let articles = ["der", "die", "das"];
     let blank = "";
@@ -36,18 +35,5 @@
     function generateHint(current) {
       return `z. B. "<strong>${current[2]}</strong>"`;  
     };
-    
-    function answerDisplay(answer, correctness) {
-      if (correctness) {
-        document.querySelectorAll('.blank')[0].innerHTML = `: <em class='correct'>${game.key[answer]}</em>`;
-        document.querySelectorAll('.message')[0].innerHTML = `Correct! You chose <em class='correct'>${game.key[answer]}</em>.`;
-      } else {
-        document.querySelectorAll('.blank')[0].innerHTML = `: <em class='incorrect'>${game.key[game.current[0]]}</em>`;
-        document.querySelectorAll('.message')[0].innerHTML = `Incorrect. You chose <em class='incorrect'>${game.key[answer]}</em>.`;
-      };
-    };
-
-    let record = new questionRecord();
-    let game = new PageState('{{ gameType }}', JSON.parse('{{ wordSet|tojson|safe }}'), JSON.parse('{{ key|tojson|safe }}'));
   </script>
 {% endblock %}

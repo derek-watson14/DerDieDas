@@ -19,33 +19,18 @@
     <h4 class="hint"></h4>
     <div class="choices">
       <div>
-        <div class="choice akk"></div>
-        <div class="choice dat"></div>
+        <div class="choice akk" onclick="game.interpretChoice(this)"></div>
+        <div class="choice dat" onclick="game.interpretChoice(this)"></div>
       </div>
       <div>
-        <div class="choice mix"></div>
-        <div class="choice gen"></div>
+        <div class="choice mix" onclick="game.interpretChoice(this)"></div>
+        <div class="choice gen" onclick="game.interpretChoice(this)"></div>
       </div>
     </div>
 {% endblock %}
 
-{% block scripts %}
-  <script type="text/javascript" src="../static/scripts/games.js"></script>
+{% block uniqueJS %}
   <script type="text/javascript">
-    // Custom functions and data for this gametype
     let blank = "ist _____";
-    
-    function answerDisplay(answer, correctness) {
-      if (correctness) {
-        document.querySelectorAll('.blank')[0].innerHTML = `ist <em class='correct'>${game.key[answer]}</em>`;
-        document.querySelectorAll('.message')[0].innerHTML = `Correct! You chose <em class='correct'>${game.key[answer]}</em>.`;
-      } else {
-        document.querySelectorAll('.blank')[0].innerHTML = `ist <em class='incorrect'>${game.key[game.current[0]]}</em>`;
-        document.querySelectorAll('.message')[0].innerHTML = `Incorrect. You chose <em class='incorrect'>${game.key[answer]}</em>.`;
-      };
-    };
-
-    let record = new questionRecord();
-    let game = new PageState('{{ gameType }}', JSON.parse('{{ wordSet|tojson|safe }}'), JSON.parse('{{ key|tojson|safe }}'));
   </script>
 {% endblock %}
