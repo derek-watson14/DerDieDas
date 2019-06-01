@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+  <div class="content-container">
+    <div class="content">
+      <h2 class="page-head">Register</h2>
+      <form action="/register" method="post">
+        <div class="form-inline">
+          <input class="rego" autocomplete="off" autofocus name="username" placeholder="Username" type="text">
+          <input class="rego" name="password" placeholder="Password" type="password">
+          <input class="rego" name="repeat" placeholder="Repeat Password" type="password">
+        </div>
+        <div class="form-inline">
+          <button class="control login-btn" type="submit">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
