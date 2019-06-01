@@ -6,24 +6,23 @@
 <div class="content-container">
   <div class="content">
       <h2 class="page-head"> - New Game - </h2>
-      <a class="option" href="{{ url_for('gender') }}">
+      <a class="option" href="{{ url_for('gender') }}" onclick="localStorage.clear()">
         <h1 class="icon">G</h1>
         <p class="text">Nomen Geschlecht. Test your knowledge of noun genders. </p>
       </a>
-      <a class="option" href="{{ url_for('prepositions') }}">
+      <a class="option" href="{{ url_for('prepositions') }}" onclick="localStorage.clear()">
         <h1 class="icon">P</h1>
         <p class="text">Präpositionen. Test your knowledge of preposition cases.
         </p>
       </a>
-      <a class="option" href="{{ url_for('endings') }}">
+      <a class="option" href="{{ url_for('endings') }}" onclick="localStorage.clear()">
         <h1 class="icon">E</h1>
         <p class="text">Nomen Endungen und Geschlechtsmuster. Practice recognizing the patterns which can identify noun genders. </p>
       </a>
-      <a class="option" href="{{ url_for('articles') }}">
+      <a class="option" href="{{ url_for('articles') }}" onclick="localStorage.clear()">
         <h1 class="icon">A</h1>
         <p class="text">Artikel. Given the case, gender and article type, choose the correct article. </p>
       </a>
   </div>
 </div>
-<script src="../static/scripts/new-game.js"></script>
 {% endblock %}
