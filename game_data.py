@@ -1,5 +1,5 @@
 # Prepositions Game Type
-prepKey = ["Accusative","Dative","Two-way","Genitive"]
+prepKey = ["Akkusativ","Dativ","Wechsel","Genitiv"]
 prepSet = [[0,"bis"], [0,"entlang"], [0,"durch"], [0,"ohne"], [0,"gegen"], [0,"um"], [0,"für"], 
           [1,"aus"], [1,"außer"], [1,"bei"], [1,"mit"], [1,"nach"], [1,"seit"], [1,"von"], [1,"zu"], 
           [2,"an"], [2,"auf"], [2,"in"], [2,"vor"], [2,"hinter"], [2,"über"], [2,"unter"], [2,"neben"], [2,"zwischen"],
@@ -8,6 +8,13 @@ prepSet = [[0,"bis"], [0,"entlang"], [0,"durch"], [0,"ohne"], [0,"gegen"], [0,"u
 
 # Articles Game Type
 articleKey = ["der","die","das","den","dem","des","ein","eine","einen","einem","einer","eines"]
+a_types = ["definite", "indefinite"]
+a_genders = ["masculine", "feminine", "neutral", "plural"]
+a_cases = ["nominitive", "accusative", "dative", "genitive"]
+def_articles = ["der","die","das","den","dem","des"] # len = 6
+indef_articles = ["ein","eine","einen","einem","einer","eines"] # len = 6
+
+
 # Format: [0] = Answer, [1] = Article Type, [2] = Gender, [3] = Case
 # Example: [5, 0, 0, 3] == ["dem","definite","masculine","dative"]
 articleSet = [[0, 0, 0, 0], [3, 0, 0, 1], [4, 0, 0, 2], [5, 0, 0, 3],    # Definite Masculine
@@ -18,9 +25,11 @@ articleSet = [[0, 0, 0, 0], [3, 0, 0, 1], [4, 0, 0, 2], [5, 0, 0, 3],    # Defin
               [7, 1, 1, 0], [7, 1, 1, 1], [10, 1, 1, 2], [10, 1, 1, 3],  # Indefinite Feminine
               [6, 1, 2, 0], [6, 1, 2, 1], [9, 1, 2, 2], [11, 1, 2, 3]]   # Indefinite Neutral
 
+
+
 # Endings Game Type
 endingKey = ["Maskulin","Feminin","Neutral"]
-endingSet = [["0", "Jahreszeiten", "Sommer"], ["0", "Himmelsrichtungen", "Süden"], ["0", "Tage", "Freitag"], ["0", "Monate", "August"], ["0", "-schluss", "Abschluss"], ["0", "-schlag", "Umschlag"], ["0", "-ismus", "Kapitalismus"], ["0", "-ling", "Zwilling"], ["0", "-name", "Vorname"], ["0", "-gang", "Ausgang"], ["0", "-fall", "Unfall"], ["0", "-tag", "Nachmittag"], ["0", "-zug", "Anzug"], ["0", "-ent", "Moment"], ["0", "-ich", "Bereich"], ["0", "-ist", "Geist"], ["0", "-or", "Motor"], ["0", "-us", "Bus"], ["0", "-er", "Pfeffer"], ["0", "-ig", "Essig"], ["0", "-er", "Bäcker"], ["1", "-schaft", "Freundschaft"], ["1", "-nummer", "Hausnummer"], ["1", "-heit", "Sicherheit"], ["1", "-keit", "Ähnlichkeit"], ["1", "-bahn", "Straßenbahn"], ["1", "-nis", "Erlaubnis"], ["1", "-sis", "Basis"], ["1", "-ion", "Religion"], ["1", "-tät", "Realität"], ["1", "-ung", "Prüfung"], ["1", "-enz", "Präsenz"], ["1", "-anz", "Toleranz"], ["1", "-ei", "Brauerei"], ["1", "-ie", "Theorie"], ["1", "-ik", "Keramik"], ["1", "-ur", "Kultur"], ["1", "-e", "Seite"], ["2", "Nomen Infivitiven", "Laufen"], ["2", "-zimmer", "Schlafzimmer"], ["2", "-mittel", "Verkehrsmittel"],["2", "-chen", "Mädchen"], ["2", "-lein", "Vöglein"], ["2", "-ment", "Element"], ["2", "-haus", "Hochhaus"],["2", "-zeug", "Werkzeug"], ["2", "-land", "Heimatland"], ["2", "-rad", "Fahrrad"], ["2", "-weh", "Heimweh"], ["2", "-amt", "Postamt"], ["2", "-tum", "Datum"], ["2", "-ma", "Thema"], ["2", "-ing", "Meeting"]]
+endingSet = [[0, "Jahreszeiten", "Sommer"], [0, "Himmelsrichtungen", "Süden"], [0, "Tage", "Freitag"], [0, "Monate", "August"], [0, "-schluss", "Abschluss"], [0, "-schlag", "Umschlag"], [0, "-ismus", "Kapitalismus"], [0, "-ling", "Zwilling"], [0, "-name", "Vorname"], [0, "-gang", "Ausgang"], [0, "-fall", "Unfall"], [0, "-tag", "Nachmittag"], [0, "-zug", "Anzug"], [0, "-ent", "Moment"], [0, "-ich", "Bereich"], [0, "-ist", "Geist"], [0, "-or", "Motor"], [0, "-us", "Bus"], [0, "-er", "Pfeffer"], [0, "-ig", "Essig"], [0, "-er", "Bäcker"], [1, "-schaft", "Freundschaft"], [1, "-nummer", "Hausnummer"], [1, "-heit", "Sicherheit"], [1, "-keit", "Ähnlichkeit"], [1, "-bahn", "Straßenbahn"], [1, "-nis", "Erlaubnis"], [1, "-sis", "Basis"], [1, "-ion", "Religion"], [1, "-tät", "Realität"], [1, "-ung", "Prüfung"], [1, "-enz", "Präsenz"], [1, "-anz", "Toleranz"], [1, "-ei", "Brauerei"], [1, "-ie", "Theorie"], [1, "-ik", "Keramik"], [1, "-ur", "Kultur"], [1, "-e", "Seite"], [2, "Nomen Infivitiven", "Laufen"], [2, "-zimmer", "Schlafzimmer"], [2, "-mittel", "Verkehrsmittel"],[2, "-chen", "Mädchen"], [2, "-lein", "Vöglein"], [2, "-ment", "Element"], [2, "-haus", "Hochhaus"],[2, "-zeug", "Werkzeug"], [2, "-land", "Heimatland"], [2, "-rad", "Fahrrad"], [2, "-weh", "Heimweh"], [2, "-amt", "Postamt"], [2, "-tum", "Datum"], [2, "-ma", "Thema"], [2, "-ing", "Meeting"]]
 
 
 # Gender Game Type
