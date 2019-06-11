@@ -1,5 +1,4 @@
 from flask import Flask, flash, render_template, request, session, redirect, escape
-from game_data import *
 from db_builder import register_user, search_users, get_questions, serialize_question, serialize_record, serialize_grades, update_gradebook, get_user_grades, get_profile_grades
 from werkzeug.security import check_password_hash, generate_password_hash
 from json import dumps, loads
