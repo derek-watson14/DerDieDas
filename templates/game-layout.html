@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset='UTF-8'/>
+    <meta charset="utf-8"/>
     <meta name="viewport" content="initial-scale=1, width=device-width"/>
     <title>{% block title %}{% endblock %}</title>
+    <link href="/static/favicon.ico" rel="icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/styles.css') }}">
   </head>
   <body>
@@ -29,8 +30,10 @@
     {% endblock %}
     <script type="text/javascript" src="../static/scripts/games.js"></script>
     <script type="text/javascript">
+      document.getElementById("new-game").classList.add('active');
+      let user_id = JSON.parse(' {{ user }} ');
       let record = new questionRecord();
-      let game = new PageState('{{ gameType }}', JSON.parse('{{ wordSet|tojson|safe }}'), JSON.parse('{{ key|tojson|safe }}'));
+      let game = new PageState('{{ game_type }}', JSON.parse('{{ questions|tojson|safe }}'));
       setHotkeys();
     </script>
   </body>

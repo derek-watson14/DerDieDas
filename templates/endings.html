@@ -25,15 +25,10 @@
 {% endblock %}
 {% block uniqueJS %}
   <script type="text/javascript">
-    let articles = ["der", "die", "das"];
     let blank = "";
 
     function generateExample(current) {
-      return `z. B. <strong>${articles[current[0]]} ${current[2]}</strong>`;
-    };
-    
-    function generateHint(current) {
-      return `z. B. "<strong>${current[2]}</strong>"`;  
+      return `z. B. <strong>${current["example"]} ist ${current["answer"]}</strong>`;
     };
   </script>
 {% endblock %}

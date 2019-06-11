@@ -30,15 +30,11 @@
 
 {% block uniqueJS %}
   <script type="text/javascript">
-    // Custom functions and data for this gametype
-    let articleTypes = ["definite", "indefinite"];
-    let genders = ["masculine", "feminine", "neutral", "plural"];
-    let cases = ["nominitive", "accusative", "dative", "genitive"];
     let blank = "_____";
 
-    function generateQuestion(item) {
-      let question = `<span class="cap">${genders[item[2]]}</span> ${articleTypes[item[1]]} article in ${cases[item[3]]}: `;
+    function generateQuestion(current) {
+      let question = `<span class="cap">${current["qinfo_2"]}</span> ${current["qinfo_1"]} article in ${current["qinfo_3"]}: `;
       return question;
-    }
+    };
   </script>
 {% endblock %}

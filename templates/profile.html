@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+  <div class="content-container">
+    <div class="content">
+      <h3 class="page-head">Hello, {{ session["username"] }}!</h3>
+      <form class="form-inline" action="/logout">
+        <button class="control login-btn" type="submit">Log Out</button>
+      </form>
+      <div class="display-menu">
+        <div class="display-option all-res" onclick="toggleRecord()">All results</div>
+        <div class="filter">
+          <div class="display-option" onclick="deployMenu()">Filter</div>
+        </div>
+      </div>
+      <table class="result-table"></table>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="../static/scripts/profile.js"></script>
+  <script type="text/javascript">
+    document.getElementById("profile").classList.add('active');
+    let userRecord = JSON.parse(' {{ user_record|tojson|safe }} ');
+  </script>
+{% endblock %}

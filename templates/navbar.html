@@ -4,19 +4,14 @@
           <span class="logoder">Der</span><span class="logodie">Die</span><span class="logodas">Das</span>
         </a>
         <div class="navlinks">
-          {% if request.url_rule.rule == "/about" %}
-            <a class="active" href="{{ url_for('about') }}">About</a>
-            <a href="{{ url_for('newGame') }}">New Game</a>
-            <a href="{{ url_for('login') }}">Login</a>
-          {% elif request.url_rule.rule == "/login" or request.url_rule.rule == "/register"  %}
-            <a href="{{ url_for('about') }}">About</a>
-            <a href="{{ url_for('newGame') }}">New Game</a>
-            <a class="active" href="{{ url_for('login') }}">Login</a>
-          {% else %}
-            <a href="{{ url_for('about') }}">About</a>
-            <a class="active" href="{{ url_for('newGame') }}">New Game</a>
-            <a href="{{ url_for('login') }}">Login</a>
-          {% endif %}
+            <!-- class="active" -->
+            <a id="about" href="{{ url_for('about') }}">About</a>
+            <a id="new-game" href="{{ url_for('newGame') }}">New Game</a>
+            {% if session %}
+            <a id="profile" href="{{ url_for('profile') }}">Profile</a>
+            {% else %}
+            <a id="login" href="{{ url_for('login') }}">Login</a>
+            {% endif %}
         </div>
       </nav>
     </div>
