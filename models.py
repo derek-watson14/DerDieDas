@@ -1,12 +1,12 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey, UniqueConstraint
 
 Base = declarative_base()
 
 class User(Base):
   __tablename__ = 'users'
   u_id = Column(Integer, primary_key=True)
-  username = Column(String, nullable=False)
+  username = Column(String, nullable=False, unique=True)
   password = Column(String, nullable=False)
 
   def __repr__(self):
@@ -17,31 +17,32 @@ class User(Base):
 class Question(Base):
   __tablename__ = 'questions'
   q_id = Column(Integer, primary_key=True)
-  game_type = Column(String, nullable=False)
-  qInfo_1 = Column(String, nullable=False)
-  qInfo_2 = Column(String, nullable=True)
-  qInfo_3 = Column(String, nullable=True)
+  gametype = Column(String, nullable=False)
+  qinfo_1 = Column(String, nullable=False)
+  qinfo_2 = Column(String, nullable=True)
+  qinfo_3 = Column(String, nullable=True)
   answer = Column(String, nullable=False)
-  choiceA = Column(String, nullable=False)
-  choiceB = Column(String, nullable=False)
-  choiceC = Column(String, nullable=False)
-  choiceD = Column(String, nullable=True)
+  choice_a = Column(String, nullable=False)
+  choice_b = Column(String, nullable=False)
+  choice_c = Column(String, nullable=False)
+  choice_d = Column(String, nullable=True)
   example = Column(String, nullable=True)
 
   def __repr__(self):
-    qInfo = [self.qInfo_1, self.qInfo_2, self.qInfo_3]
-    question = " ".join([word for word in qInfo if word != None])
+    qinfo = [self.qinfo_1, self.qinfo_2, self.qinfo_3]
+    question = " ".join([word for word in qinfo if word != None])
     return "<Question(quesion_id='{}', question='{}', answer= '{}')>"\
             .format(self.q_id, question, self.answer)
 
 
 class Record(Base):
   __tablename__ = 'gradebook'
+  __table_args__ = (UniqueConstraint('ru_id', 'rq_id', name='_record_uniqueness'), )                 
   r_id = Column(Integer, primary_key=True)
-  ru_id = Column(Integer, nullable=False)
-  rq_id = Column(Integer, nullable=False)
-  attempts = Column(Integer, nullable=False)
+  ru_id = Column(Integer, ForeignKey("users.u_id"), nullable=False)
+  rq_id = Column(Integer, ForeignKey("questions.q_id"), nullable=False)
   correct = Column(Integer, nullable=False)
+  attempts = Column(Integer, nullable=False)
 
   def __repr__(self):
     percentage = "{:.2%}".format(self.correct/self.attempts)
