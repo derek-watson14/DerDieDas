@@ -1,16 +1,13 @@
-// Make page state into a prototype, and make subclasses for each gametype that add features as needed!
-// Create relational database with the data and load necessary info with python application
-// Design for mobile with media queries, update overall look
 // Create game type description that can pop up within overlay
-// 
+
+// [0] q_id, [1] gametype, [2] - [4] question info, [5] answer, [6] - [9] choices, [10] example
 
 class PageState {
-    constructor(gameType, set, key) {
+    constructor(gameType, questions) {
       this.gameType = gameType;
-      this.set = set;
-      this.setSize = set.length;
-      this.key = key;
-      this.keySize = key.length;
+      this.set = questions;
+      this.setSize = questions.length;
+      this.currentCorrectness;
       this.correct = 0;
       this.attempts = 0;
       this.answered = false;
@@ -29,15 +26,18 @@ class PageState {
       this.generateHotkeyList();
     };
     resetFields() {
-      if (this.attempts < this.setSize) {
+      // ISNT KEEPING GOOD TRACK OF PROGRESS
+      if (this.shown.length < this.setSize) {
         this.hotkeys = [];
+        if (this.answered) sendQuestionResults();
         document.querySelectorAll('.blank')[0].innerHTML = blank;
         document.querySelectorAll('.message')[0].innerHTML = "";
         document.querySelectorAll('.tip')[0].innerHTML = "";
-        this.answered = false;
         this.setCurrent();
+        this.answered = false;
       } else {
         this.storeResults();
+        window.location.href = "/results";
       }
     };
     storeResults() {
@@ -48,35 +48,45 @@ class PageState {
     };
 
     // Operational and Mechanical Functions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+    
+    getCurrent() {
+      let current = this.set[randomElement(this.setSize)];
+      if (this.shown.includes(current["q_id"])) {
+        console.log("Already shown");
+        return this.getCurrent();
+      } else {
+        if (this.answered || this.shown.length == 0) this.shown.push(current["q_id"]);
+        return current;
+      };
+    };
     checkAnswer(answer) {
       if (!this.answered) {
         let correctness = this.testCorrectness(answer);
+        this.currentCorrectness = (correctness ? 1 : 0);
         this.displayTip(correctness);
         this.displayAsnwer(answer, correctness);
         this.attempts += 1;
         this.displayScore();
-        record.addAttempt(answer, this.current[0], this.current[1], correctness);
+        let question = this.questionText(this.current);
+        record.addAttempt(this.current["q_id"], answer, this.current["answer"], question, correctness);
         this.answered = true;
       };
     };
+    questionText(current) {
+      let question = "";
+      for (let index = 0; index < 3; index++) {
+        if (current[`qinfo_${index}`]) question += `${current[`qinfo_${index}`]} `
+      };
+      return question.trim()
+    };
     testCorrectness(answer) {
-      if (answer == this.current[0]) {
+      if (answer == this.current["answer"]) {
         this.correct += 1;
         return true;
       } else return false;
     };
-    getCurrent() {
-      let current = this.set[randomElement(this.setSize)];
-      if (this.shown.includes(current)) {
-        return this.getCurrent();
-      } else {
-        this.shown.push(this.current);
-        return current;
-      };
-    };
     interpretChoice(element) {
-      this.checkAnswer(game.key.indexOf(element.innerHTML.substr(3)));
+      this.checkAnswer(element.innerHTML.substr(3));
     };
     generateHotkeyList() {
       let hotkeys = this.hotkeys;
@@ -89,50 +99,32 @@ class PageState {
 
     setView() {
       this.displayCurrentWord();
-      this.displayChoices();
+      this.displayChoices(this.current);
       this.displayScore();
     }
     displayCurrentWord() {
       if (this.gameType == "gender" || this.gameType == "preps") {
-        document.querySelectorAll('.current')[0].innerHTML = this.current[1];
+        document.querySelectorAll('.current')[0].innerHTML = this.current["qinfo_1"];
       } else if (this.gameType == "endings") {
-        document.querySelectorAll('.current')[0].innerHTML = this.current[1];
-        document.querySelectorAll('.hint')[0].innerHTML = generateHint(this.current);
+        document.querySelectorAll('.current')[0].innerHTML = this.current["qinfo_1"];
+        document.querySelectorAll('.hint')[0].innerHTML = `z. B. "<strong>${this.current["example"]}</strong>"`;
       } else if (this.gameType == "articles") {
         document.querySelectorAll('.current')[0].innerHTML = generateQuestion(this.current);
       };
     };
-    displayChoices() {
-      if (this.gameType == "articles") this.randomChoices();
-      else this.presetChoices();
-    };
-    randomChoices() {
-      let options = this.generateRandomChoices();
+    displayChoices(current) {
+      let choices = ["choice_a", "choice_b", "choice_c", "choice_d"];
       document.querySelectorAll('.choice').forEach(function(choice, index) {
-        choice.innerHTML = `${index + 1}. ${options.splice(randomElement(options.length), 1)}`;
-      });
-    };
-    generateRandomChoices() {
-      let options = [this.key[this.current[0]]];
-      while (options.length < document.querySelectorAll('.choice').length) {
-        let falseChoice = this.key[randomElement(this.keySize)];
-        if (!options.includes(falseChoice)) options.push(falseChoice);
-      };
-      return options;
-    };
-    presetChoices() {
-      let key = this.key; 
-      document.querySelectorAll('.choice').forEach(function(choice, index) {
-        choice.innerHTML = `${index + 1}. ${key[index]}`;
+        choice.innerHTML = `${index + 1}. ${current[choices[index]]}`;
       });
     };
     displayAsnwer(answer, correctness) {
       if (correctness) {
-        document.querySelectorAll('.blank')[0].innerHTML = this.prefix() + `<em class='correct'>${this.key[answer]}</em>`;
-        document.querySelectorAll('.message')[0].innerHTML = `Correct! You chose <em class='correct'>${this.key[answer]}</em>.`;
+        document.querySelectorAll('.blank')[0].innerHTML = this.prefix() + `<em class='correct'>${this.current["answer"]}</em>`;
+        document.querySelectorAll('.message')[0].innerHTML = `Correct! You chose <em class='correct'>${answer}</em>.`;
       } else {
-        document.querySelectorAll('.blank')[0].innerHTML = this.prefix() + `<em class='incorrect'>${this.key[this.current[0]]}</em>`;
-        document.querySelectorAll('.message')[0].innerHTML = `Incorrect. You chose <em class='incorrect'>${this.key[answer]}</em>.`;
+        document.querySelectorAll('.blank')[0].innerHTML = this.prefix() + `<em class='incorrect'>${this.current["answer"]}</em>`;
+        document.querySelectorAll('.message')[0].innerHTML = `Incorrect. You chose <em class='incorrect'>${answer}</em>.`;
       }
     };
     prefix() {
@@ -164,8 +156,8 @@ class questionRecord {
     constructor() {
       this.record = [];
     };
-    addAttempt(guess, solution, word, correctness) {
-      let attempt = [guess, solution, word, correctness];
+    addAttempt(qID, guess, solution, word, correctness) {
+      let attempt = [qID, guess, solution, word, correctness];
       this.record.push(attempt);
     };
 };
@@ -188,9 +180,10 @@ function setHotkeys() {
 };
 
 function setChoiceHotkeys() {
+  choice = document.querySelectorAll('.choice')
   for (let index = 0, key = 49; index < game.hotkeys.length; index++, key++) {
     window.addEventListener("keyup", function(event) {
-      if (event.keyCode == key) game.checkAnswer(game.key.indexOf(game.hotkeys[index]));
+      if (event.keyCode == key) game.checkAnswer(choice[index].innerHTML.substr(3));
     });
   };
 };
@@ -211,4 +204,15 @@ function setOverlayHotkeys() {
       game.gameInfo = false;
     };
   });
+};
+function sendQuestionResults() {
+  if (user_id) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/update_grades");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function() {
+      if (!JSON.parse(xhr.responseText)) console.log(JSON.parse(xhr.responseText))
+    }
+    xhr.send(JSON.stringify({q_id: game.current["q_id"], u_id: user_id, correct: game.currentCorrectness}));
+  };
 };
