@@ -4,15 +4,59 @@
 
 {% block content %}
   <div class="content-container">
-    <div class="content">
+    <div class="content profile-content">
       <h3 class="page-head">Hello, {{ session["username"] }}!</h3>
-      <form class="form-inline" action="/logout">
-        <button class="control login-btn" type="submit">Log Out</button>
-      </form>
-      <div class="display-menu">
-        <div class="display-option all-res" onclick="toggleRecord()">All results</div>
-        <div class="filter">
-          <div class="display-option" onclick="deployMenu()">Filter</div>
+      <div id="profile-menu">
+        <div id="profile-top">
+            <div id="profile-user">
+                <h2 id="user-title">User Record:</h2>
+                <h2 id="user-user">{{ session["username"] }}</h2>
+            </div>
+            <p>The table below contains a full record of the questions you have answered. 
+                You can see how many times you have answered each question and the percentage of times you 
+                were correct. Use this information to focus on your weaker questions.
+            </p>
+        </div>
+        <div id="profile-bottom">
+            <div id="overall">
+                <h4>Overall Grade</h4>
+                <div id="overall-data">
+                    <div>
+                        <h4 id="overall-attempts"></h4>
+                        <h5>Attempts</h6>
+                    </div>
+                    <div id="divider"></div>
+                    <div>
+                        <h4 id="overall-percentage"></h4>
+                        <h5>Correct</h6>
+                    </div>
+                </div>
+            </div>
+            <div id="form-container">
+                <form id="profile-form">
+                    <div id="form-top"> 
+                        <p>Maximum display score: </p>
+                        <input type="range" min="1" max="100" value="100"
+                                            class="myslider" id="sliderRange"> 
+                        <div>Score: <span id="demo"></span></div>
+                    </div>
+                    <div id="form-bottom">
+                        <div id="gametype-filter">
+                            <p>Filter by game type: </p>
+                            <select name="gametypes" id="gametypes">
+                                <option value="all">All</option>
+                                <option value="gender">Genders</option>
+                                <option value="preps">Preposisions</option>
+                                <option value="endings">Word Endings</option>
+                                <option value="articles">Articles</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="form-submit">
+                        <button type="button" id="filter-submit" onclick="displayTable()">Refresh Table</button>
+                    </div>
+                </form>
+            </div>
         </div>
       </div>
       <table class="result-table"></table>
@@ -23,5 +67,6 @@
   <script type="text/javascript">
     document.getElementById("profile").classList.add('active');
     let userRecord = JSON.parse(' {{ user_record|tojson|safe }} ');
+    setupPage();
   </script>
 {% endblock %}
