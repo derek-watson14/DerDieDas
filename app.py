@@ -1,7 +1,7 @@
 from flask import Flask, flash, render_template, request, session, redirect
-from helpers import (register_user, search_users, get_questions,
+from queries import (register_user, search_users, get_questions,
                      serialize_record, serialize_grades, update_gradebook,
-                     serialize_question, get_user_grades, profile_grades)
+                     serialize_question, grades_for, profile_table)
 from werkzeug.security import check_password_hash
 from json import dumps
 
@@ -79,7 +79,7 @@ def profile():
     user_record = None
     if session:
         user_record = [serialize_grades(record) for record
-                       in profile_grades(session["user_id"])]
+                       in profile_table(session["user_id"])]
 
     return render_template("profile.html", user_record=user_record)
 
@@ -148,7 +148,7 @@ def results():
     user_record = None
     if session:
         user_record = [serialize_record(record) for record
-                       in get_user_grades(session["user_id"])]
+                       in grades_for(session["user_id"])]
 
     return render_template("results.html",
                            user_record=user_record)
