@@ -1,13 +1,7 @@
-function displayTable() {
-    let table = document.querySelectorAll('.result-table')[0];
-    let limit = document.getElementById('sliderRange');
-    let gametype = document.getElementById('gametypes');
-    table.innerHTML = buildTable(limit.value, gametype.value);
-    setEventListeners();
-};
-
-function setEventListeners() {
-    document.getElementById("th-percentage").addEventListener("click", sortbyScore);
+function setupPage() {
+    displayTable();
+    activateRangeSlider();
+    calculateOverall();
 };
 
 function activateRangeSlider() {
@@ -29,36 +23,38 @@ function calculateOverall() {
     ovr_per.innerHTML = Math.round((totals.correct / totals.attempts) * 100).toString() + "%";
 };
 
-var sorted = 0;
-function sortbyScore() {
-    console.log(sorted)
-    if (sorted == 0) {
-        userRecord.sort((a, b) => (a.correct / a.attempts > b.correct / b.attempts) ? -1 : 1);
-        sorted = 1;
-    } else {
-        userRecord.sort((a, b) => (a.correct / a.attempts > b.correct / b.attempts) ? 1 : -1);
-        sorted = 0;
-    }
-    displayTable();
-    let display = document.getElementById("th-percentage");
-    sorted == 1 ? display.innerHTML = "Percentage&#x1f809;" : display.innerHTML = "Percentage&#x1f80b;";
+
+function displayTable() {
+    let table = document.querySelectorAll('.result-table')[0];
+    let limit = document.getElementById('sliderRange');
+    let gametype = document.getElementById('gametypes');
+    table.innerHTML = buildTable(limit.value, gametype.value);
+    setTableSort();
 };
 
-function myFunction() {
-    var str = "100%"; 
-    var res = str.substr(0, str.length - 1);
-    document.getElementById("demo").innerHTML = res;
-  }
+function setTableSort() {
+    const getCellValue = (tr, index) => tr.children[index].innerText || tr.children[index].textContent;
 
-function setupPage() {
-    displayTable();
-    activateRangeSlider();
-    calculateOverall();
+    const comparer = (idx, asc) => (rowa, rowb) => ((txta, txtb) => {
+            if (txta.slice(-1) == "%" && txtb.slice(-1) == "%") txta = txta.slice(0, -1), txtb = txtb.slice(0, -1);
+            return txta !== '' && txtb !== '' && !isNaN(txta) && !isNaN(txtb) ? txta - txtb : txta.toString().localeCompare(txtb);
+        })(getCellValue(asc ? rowa : rowb, idx), getCellValue(asc ? rowb : rowa, idx));
+
+    const arrow = (order) => order ? "&#x1f809;" : "&#x1f80b;";
+        
+    document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+        const table = th.closest('table');
+        Array.from(table.querySelectorAll('tr:nth-child(n+2)'))
+            .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+            .forEach(tr => table.appendChild(tr) );
+        Array.from(th.parentNode.children).forEach(head => {
+            const headtext = head.innerHTML.replace(/(\w+).+/, "$1");
+            head.innerHTML = `${headtext}${head == th ? arrow(this.order = !this.order) : "-"}`;
+        });
+    })));
 };
 
-// https://www.fileformat.info/info/unicode/char/search.htm
-// &#x1f809; (up arrow) | &#x1f80b; (down arrow)
-// &#x2b9d; (up arrowhead) | &#x2b9f; (down arrowhead)
+
 function buildTable(filter=100, gametype="all") {
     let tableHTML = `<tr class='row-heading'>\
                      <th id="th-gametype">GameType-</th>\
