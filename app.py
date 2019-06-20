@@ -4,11 +4,12 @@ from queries import (register_user, search_users, get_questions,
                      serialize_question, grades_for, profile_table)
 from werkzeug.security import check_password_hash
 from json import dumps
+from config import SECRET_KEY
 
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.secret_key = 'super secret key'
+app.secret_key = SECRET_KEY
 app.config['SESSION_TYPE'] = 'filesystem'
 
 
@@ -17,7 +18,7 @@ def apology(message, code=400):
 
 
 def get_u_id():
-    return session["user_id"] if session else None
+    return session["user_id"] if session.get("user_id") else None
 
 
 @app.route("/")
@@ -35,10 +36,12 @@ def login():
             return apology("must provide password", 403)
 
         user = search_users(request.form.get("username"))
-        if user and check_password_hash(user[2], request.form.get("password")):
-            session["user_id"] = user[0]
-            session["username"] = user[1]
-            flash(f"{user[1]} logged in!")
+        if user and check_password_hash(user["password"],
+                                        request.form.get("password")):
+            session["user_id"] = user["u_id"]
+            session["username"] = user["username"]
+            session["reg_date"] = user["reg_date"].strftime("%B %dth, %Y")
+            flash(f"{session['username']} logged in!")
             return redirect("/")
         else:
             flash("Incorrect username or password")
@@ -95,56 +98,36 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/endings")
-def endings():
-    game_type = "endings"
-    questions = [serialize_question(question) for question
-                 in get_questions("endings")]
+@app.route("/game/<gametype>")
+def run_game(gametype):
+    if gametype == "gender":
+        template = "gender.html"
+        questions = [serialize_question(question) for question
+                     in get_questions("gender")]
+    if gametype == "preps":
+        template = "prepositions.html"
+        questions = [serialize_question(question) for question
+                     in get_questions("preps")]
+    if gametype == "endings":
+        template = "endings.html"
+        questions = [serialize_question(question) for question
+                     in get_questions("endings")]
+    if gametype == "articles":
+        template = "articles.html"
+        questions = [serialize_question(question) for question
+                     in get_questions("articles")]
 
-    return render_template("endings.html",
-                           game_type=game_type,
-                           questions=questions,
-                           user=dumps(get_u_id()))
-
-
-@app.route("/articles")
-def articles():
-    game_type = "articles"
-    questions = [serialize_question(question) for question
-                 in get_questions("articles")]
-
-    return render_template("articles.html",
-                           game_type=game_type,
-                           questions=questions,
-                           user=dumps(get_u_id()))
-
-
-@app.route("/gender")
-def gender():
-    game_type = "gender"
-    questions = [serialize_question(question) for question
-                 in get_questions("gender")]
-
-    return render_template("gender.html",
-                           game_type=game_type,
-                           questions=questions,
-                           user=dumps(get_u_id()))
-
-
-@app.route("/prepositions")
-def prepositions():
-    game_type = "preps"
-    questions = [serialize_question(question) for question
-                 in get_questions("preps")]
-
-    return render_template("prepositions.html",
-                           game_type=game_type,
+    session["current_gametype"] = gametype
+    return render_template(template,
+                           gametype=gametype,
                            questions=questions,
                            user=dumps(get_u_id()))
 
 
 @app.route("/results")
 def results():
+    session["current_gametype"] = None
+    session["results"] = True
     user_record = None
     if session:
         user_record = [serialize_record(record) for record
