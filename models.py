@@ -1,5 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey, UniqueConstraint
+from sqlalchemy import (Column, Integer, String, ForeignKey, UniqueConstraint, 
+                        DateTime)
+from sqlalchemy.sql import func
 
 Base = declarative_base()
 
@@ -7,6 +9,7 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = 'users'
     u_id = Column(Integer, primary_key=True)
+    reg_date = Column(DateTime(timezone=False), server_default=func.now())
     username = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
 
