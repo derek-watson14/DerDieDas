@@ -4,28 +4,47 @@
 
 {% block content %}
 <div class="content-container">
-  <div class="content games-container">
-    <h2 class="page-head"> - New Game - </h2>
-    <a class="option" href="{{ url_for('gender') }}" onclick="localStorage.clear()">
-      <h1 class="icon">G</h1>
-      <p class="text">Nomen Geschlecht. Test your knowledge of noun genders. </p>
-    </a>
-    <a class="option" href="{{ url_for('prepositions') }}" onclick="localStorage.clear()">
-      <h1 class="icon">P</h1>
-      <p class="text">Präpositionen. Test your knowledge of preposition cases.
-      </p>
-    </a>
-    <a class="option" href="{{ url_for('endings') }}" onclick="localStorage.clear()">
-      <h1 class="icon">E</h1>
-      <p class="text">Nomen Endungen und Geschlechtsmuster. Practice recognizing the patterns which can identify noun genders. </p>
-    </a>
-    <a class="option" href="{{ url_for('articles') }}" onclick="localStorage.clear()">
-      <h1 class="icon">A</h1>
-      <p class="text">Artikel. Given the case, gender and article type, choose the correct article. </p>
-    </a>
-  </div>
+    <div class="content games-container">
+        <h2 class="page-head"> - New Game - </h2>
+        <a class="option" href="{{ url_for('run_game', gametype='gender') }}" onclick="localStorage.clear()">
+            <div>
+                <h1 class="icon">G</h1>
+            </div>
+            <div class="text">
+                <h4>Noun Genders:</h4>
+                <p>Test your knowledge of noun genders. </p>
+            </div>
+        </a>
+        <a class="option" href="{{ url_for('run_game', gametype='preps') }}" onclick="localStorage.clear()">
+            <div>
+                <h1 class="icon">P</h1>
+            </div>
+            <div class="text">
+                <h4>Prepositions:</h4>
+                <p>Test your knowledge of preposition cases.</p>
+            </div>
+        </a>
+        <a class="option" href="{{ url_for('run_game', gametype='endings') }}" onclick="localStorage.clear()">
+            <div>
+                <h1 class="icon">E</h1>
+            </div>
+            <div class="text">
+                <h4>Gender Indicators:</h4>
+                <p>Practice recognizing the patterns which can identify noun genders. </p>
+            </div>
+        </a>
+        <a class="option" href="{{ url_for('run_game', gametype='articles') }}" onclick="localStorage.clear()">
+            <div>
+                <h1 class="icon">A</h1>
+            </div>
+            <div class="text">
+                <h4>Articles:</h4>
+                <p>Given the case, gender and article type, choose the correct article. </p>
+            </div>
+        </a>
+    </div>
 </div>
 <script type="text/javascript">
-  document.getElementById("new-game").classList.add('active');
+    document.getElementById("new-game").classList.add('active');
 </script>
 {% endblock %}
