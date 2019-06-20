@@ -114,6 +114,8 @@ def test_all_sql():
     register_user("derek2", "pppoo")
     register_user("anni5", "dogs")
     print(search_users("derek2")["u_id"])
+    print(search_users("derek2")["reg_date"],
+          type(search_users("derek2")["reg_date"]))
 
     update_gradebook(1, 100, 1)  # new_user_record(ru_id, rq_id, correct)
     update_gradebook(1, 100, 0)  # update_exsisting(r_id, correct)
