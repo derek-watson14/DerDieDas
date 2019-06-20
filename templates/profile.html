@@ -5,12 +5,13 @@
 {% block content %}
   <div class="content-container">
     <div class="content profile-content">
-      <h3 class="page-head">Hello, {{ session["username"] }}!</h3>
+      <h5 class="page-head">Hello, {{ session["username"] }}!</h3>
       <div id="profile-menu">
         <div id="profile-top">
             <div id="profile-user">
                 <h2 id="user-title">User Record:</h2>
                 <h2 id="user-user">{{ session["username"] }}</h2>
+                <p>Registered: {{ session["reg_date"] }}</p>
             </div>
             <p>The table below contains a full record of the questions you have answered. 
                 You can see how many times you have answered each question and the percentage of times you 
@@ -19,7 +20,7 @@
         </div>
         <div id="profile-bottom">
             <div id="overall">
-                <h4>Overall Grade</h4>
+                <h4>Overall Grade:</h4>
                 <div id="overall-data">
                     <div>
                         <h4 id="overall-attempts"></h4>
@@ -36,7 +37,7 @@
                 <form id="profile-form">
                     <div id="form-top"> 
                         <p>Maximum display score: </p>
-                        <input type="range" min="1" max="100" value="100"
+                        <input type="range" min="0" max="100" value="100"
                                             class="myslider" id="sliderRange"> 
                         <div>Score: <span id="demo"></span></div>
                     </div>
