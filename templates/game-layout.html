@@ -1,40 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="initial-scale=1, width=device-width"/>
-    <title>{% block title %}{% endblock %}</title>
-    <link href="/static/favicon.ico" rel="icon">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style/styles.css') }}">
-  </head>
-  <body>
-    {% include 'navbar.html' %}
-    {% block gameSpecific %}
-    {% endblock %}
-      <p class="note">Tip: Play using the keyboard. Enter for Next.</p>
-      <div class="controls">
-        <a class="control results" onclick="game.storeResults()" href="{{ url_for('results') }}">Results</a>
-        <div class="control info-btn" onclick="game.toggleOverlay()">Game Info</div>
-        <div class="control next" onclick="game.resetFields()">Next</div>
-      </div>
-      <div class="overlay" onclick="game.toggleOverlay()">
-        <div class="info-container">
-          <h1 class="info-head">Game Information </h1>
-          <p class="info-text">Use the keys 1 to 4 to play with the keyboard, press Enter for next. Score is displayed in the upper left
-            hand corner. The results button ends the game and will display which answers were right and wrong. 
-          </p>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="initial-scale=1, width=device-width"/>
+        <title>{% block title %}{% endblock %}</title>
+        <link href="/static/favicon.ico" rel="icon">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style/styles.css') }}">
+    </head>
+    <body>
+        {% include 'navbar.html' %}
+        {% block gameSpecific %}
+        {% endblock %}
+            <p class="note">Tip: Play using 1 - 4 on the keyboard. Enter for Next.</p>
+            <div class="controls">
+                <a class="control results" onclick="game.storeResults()" href="{{ url_for('results') }}">Results</a>
+                <div class="control info-btn" onclick="game.toggleOverlay()">Game Info</div>
+                <div class="control next" onclick="game.resetFields()">Next</div>
+            </div>
+            <div class="overlay" onclick="game.toggleOverlay()">
+                <div class="info-container">
+                    <h1 class="info-head">Game Information </h1>
+                    <p class="info-text">Use the keys 1 to 4 to play with the keyboard, press Enter for next. Score is displayed in the upper left
+                        hand corner. The results button ends the game and will display which answers were right and wrong. 
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    {% block uniqueJS %}
-    {% endblock %}
-    <script type="text/javascript" src="../static/scripts/games.js"></script>
-    <script type="text/javascript">
-      document.getElementById("new-game").classList.add('active');
-      let user_id = JSON.parse(' {{ user }} ');
-      let record = new questionRecord();
-      let game = new PageState('{{ game_type }}', JSON.parse('{{ questions|tojson|safe }}'));
-      setHotkeys();
-    </script>
-  </body>
+        {% block uniqueJS %}
+        {% endblock %}
+        <script type="text/javascript" src="../static/scripts/games.js"></script>
+        <script type="text/javascript">
+            document.getElementById("current-game").classList.add('active');
+            let user_id = JSON.parse(' {{ user }} ');
+            let record, game;
+            if (!localStorage.getItem("savedGame")) {
+                record = new questionRecord();
+                let qset = JSON.parse('{{ questions|tojson|safe }}')
+                game = new PageState(gameType='{{ gametype }}', set=qset, setSize=qset.length);
+                game.setCurrent();
+            } else {
+                let saved = JSON.parse(localStorage.getItem("savedGame"));
+                record = new questionRecord(saved.record);
+                game = new PageState(gameType = saved.gameType,
+                                     set = saved.set, 
+                                     setSize = saved.setSize,
+                                     correct = saved.correct,
+                                     attempts = saved.attempts,
+                                     shown = saved.shown,
+                                     current = saved.current)
+                console.log(game.gameType, game.set, game.setSize, game.correct, game.attempts, game.shown, game.current)
+                game.setView();
+            };
+            setHotkeys();
+        </script>
+    </body>
 </html>
