@@ -48,6 +48,7 @@ class Record(Base):
     rq_id = Column(Integer, ForeignKey("questions.q_id"), nullable=False)
     correct = Column(Integer, nullable=False)
     attempts = Column(Integer, nullable=False)
+    score = Column(Integer, nullable=False)
 
     def __repr__(self):
         percentage = "{:.2%}".format(self.correct/self.attempts)
