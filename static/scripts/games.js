@@ -21,8 +21,8 @@ class PageState {
         this.setView();
     };
     resetFields() {
+        if (this.answered) sendQuestionResults();
         if (this.shown.length < this.setSize) {
-            if (this.answered) sendQuestionResults();
             document.querySelectorAll('.blank')[0].innerHTML = blank;
             document.querySelectorAll('.message')[0].innerHTML = "";
             document.querySelectorAll('.tip')[0].innerHTML = "";
@@ -60,7 +60,7 @@ class PageState {
     // Operational and Mechanical Functions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
     getCurrent() {
-        let current = this.set[randomElement(this.setSize)];
+        let current = this.set[randomElement(this.set.length)];
         if (this.shown.includes(current["q_id"])) {
             return this.getCurrent();
         } else {
@@ -136,7 +136,8 @@ class PageState {
         else return "";
     };
     displayScore() {
-        document.querySelectorAll('.score')[0].innerHTML = `${this.correct}/${this.attempts}: ${calcPercentage(this.correct, this.attempts)}%`;
+        document.querySelector('.score p').innerHTML = `Score: ${this.correct}/${this.attempts} \
+                                                        (${calcPercentage(this.correct, this.attempts)}%)`;
     };
     displayTip(isCorrect) {
         let tip = document.querySelectorAll('.tip')[0];
@@ -215,7 +216,7 @@ function setOverlayHotkeys() {
 };
 
 function sendQuestionResults() {
-    if (user_id) {
+    if (user_id && game.answered) {
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "/update_grades");
         xhr.setRequestHeader("Content-Type", "application/json");
