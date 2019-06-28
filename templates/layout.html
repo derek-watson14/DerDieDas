@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style/styles.css') }}">
   </head>
   <body>
-  {% include 'navbar.html' %}
+  {% include 'partials/navbar.html' %}
   {% if get_flashed_messages(with_categories=true) %}
     <header>
       <div class="flash-alert" role="alert">
