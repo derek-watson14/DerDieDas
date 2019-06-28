@@ -8,16 +8,21 @@
         <h1 class="page-head">Results</h1>
         <h2 class="result-score"></h2>
         <div class="display-menu">
-            <div class="display-option all-res" onclick="displayResults(true)">All results</div>
-            <div class="display-option inc-res" onclick="displayResults(false)">Incorrect only</div>
+            <label for="disp-toggle" class="form-btn--label">Display Toggle: </label>
+            <button type="button" class="form-btn w-131" name="disp-toggle">Incorrect Only</button>
         </div>
         <table class="result-table"></table>
     </div>
 </div>
-<script src="../static/scripts/results.js"></script>
+<script type="text/javascript" src="../static/scripts/table-sorter.js"></script>
+<script type="text/javascript" src="../static/scripts/results.js"></script>
 <script type="text/javascript">
     document.getElementById("results").classList.add('active');
     let userRecord = JSON.parse(' {{ user_record|tojson|safe }} ');
-    displayResults(true);
+    let tableController = new TableController(userRecord);
+    let messageController = new MessageController();
+    let resultDisplay = new ResultDisplay(tableController, messageController);
+    
+    resultDisplay.setInitialDisplay();
 </script>
 {% endblock %}
