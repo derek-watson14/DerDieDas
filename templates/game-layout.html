@@ -8,14 +8,14 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style/styles.css') }}">
     </head>
     <body>
-        {% include 'navbar.html' %}
+        {% include 'partials/navbar.html' %}
         {% block gameSpecific %}
         {% endblock %}
             <p class="note">Tip: Play using 1 - 4 on the keyboard. Enter for Next.</p>
             <div class="controls">
-                <a class="control results" onclick="game.storeResults()" href="{{ url_for('results') }}">Results</a>
-                <div class="control info-btn" onclick="game.toggleOverlay()">Game Info</div>
-                <div class="control next" onclick="game.resetFields()">Next</div>
+                <a class="form-btn form-btn--big results" onclick="game.storeResults()" href="{{ url_for('results') }}">Results</a>
+                <div class="form-btn form-btn--big info-btn" onclick="game.toggleOverlay()">Game Info</div>
+                <div class="form-btn form-btn--big next" onclick="game.resetFields()">Next</div>
             </div>
             <div class="overlay" onclick="game.toggleOverlay()">
                 <div class="info-container">
@@ -31,13 +31,15 @@
         <script type="text/javascript" src="../static/scripts/games.js"></script>
         <script type="text/javascript">
             document.getElementById("current-game").classList.add('active');
-            let user_id = JSON.parse(' {{ user }} ');
+            let user_id = JSON.parse(' {{ user|tojson|safe }} ');
             let record, game;
             if (!localStorage.getItem("savedGame")) {
                 record = new questionRecord();
-                let qset = JSON.parse('{{ questions|tojson|safe }}')
-                game = new PageState(gameType='{{ gametype }}', set=qset, setSize=qset.length);
+                let qset = JSON.parse('{{ questions|tojson|safe }}');
+                let setSize = JSON.parse('{{ setSize|tojson|safe }}');
+                game = new PageState(gameType='{{ gametype }}', set=qset, setSize=setSize);
                 game.setCurrent();
+                game.saveGame();
             } else {
                 let saved = JSON.parse(localStorage.getItem("savedGame"));
                 record = new questionRecord(saved.record);
@@ -48,7 +50,6 @@
                                      attempts = saved.attempts,
                                      shown = saved.shown,
                                      current = saved.current)
-                console.log(game.gameType, game.set, game.setSize, game.correct, game.attempts, game.shown, game.current)
                 game.setView();
             };
             setHotkeys();
