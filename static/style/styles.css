@@ -12,9 +12,23 @@ header { width: 100; display: flex; justify-content: center; }
 .flash-alert { font-size: 1.4em; padding: 10px; width: 75%; background-color: lightgreen; 
                color: black; text-align: center; 
              }
-th { opacity: 1; }
-th:hover { cursor: pointer; opacity: 0.7; }
+th:hover { cursor: pointer; color: ivory; }
+.ul { text-decoration: underline; }
+tr:nth-child(n+2):hover { filter: brightness(110%); }
 
+
+/* About */
+/* background-image: url("church.JPG"); background-repeat: repeat-y; */
+.article { display: flex; flex-direction: column; margin-top: 25px; }
+.article-section { display: flex; flex-direction: row; margin-bottom: 30px; padding: 20px; background-color: #4679B2;
+                   border-radius: 4px; }
+.section-head { text-align: left; font-size: 1rem; flex: 1 1 0; background: rgb(255, 255, 255, 0.6);
+                padding: 10px; margin-right: 25px; border-radius: 4px; }
+.section-text { text-indent: 40px; font-size: 1rem; text-align: left; padding: 10px; flex: 5 5 0; 
+                line-height: 1.3rem; background: rgb(255, 255, 255, 0.6); border-radius: 4px; }
+.origin { background-color: lightskyblue; }
+.tech { background-color: lightcoral; }
+.learn { background-color: lightgreen; }
 
 /* Nav Bar */
 .navbar-container { background-color: rgb(85, 85, 85); width: 100%; padding: 15px 0; 
@@ -30,37 +44,55 @@ th:hover { cursor: pointer; opacity: 0.7; }
 .logodie { color: red; }
 .logodas { color: gold; }
 .navlinks a { float: left; color: gold; text-align: center; padding: 12px 14px; 
-              text-decoration: none; font-size: 1.4em; 
-              font-family: Verdana, Geneva, Tahoma, sans-serif }
+              text-decoration: none; font-size: 1.4em; transition: all 200ms ease;
+              font-family: Verdana, Geneva, Tahoma, sans-serif; }
 .navlinks a:hover { background-color: #ddd; color: black; border-bottom: black solid 2px; }
 .navlinks a.active { background-color: black; color: gold; border-bottom: gold solid 2px; }
 .navlinks a.active:hover { background-color: #ddd; color: black; border-bottom: black solid 2px; }
 
 
 /* Page: New Game */
-.page-head { font-size: 3.6em; width: 100%; margin: 20px 0px 20px 0px; padding: 10px 0px; 
+.page-head { font-size: 3.4em; width: 100%; margin: 20px 0px 20px 0px; padding: 10px 0px; 
              text-align: center; }
-.option { border: black solid 3px; width: 75%; height: 150px; text-align: center; 
+.ng-info { border: black 2px solid; background: lightblue; padding: 12px 25px; margin-bottom: 20px; font-size: 1.1em;
+           border-radius: 4px; }
+.ng-info > h4 { text-align: center; margin-bottom: 10px; font-size: 1.1em; }
+.ng-info > P { margin-bottom: 5px; }
+.option { border: black solid 3px; width: 100%; height: 100vh; max-height: 125px; overflow: hidden; 
           align-items: center; padding: 10px 0px 10px 20px; margin: 0px 0px 30px 0px; display: flex;
-          color: black; text-decoration: none; border-radius: 4px; 
+          border-radius: 4px; transition: all 250ms ease; text-align: center;
         }
-.option:hover {  box-shadow: -5px 7px 6px 1px rgb(85, 85, 85); cursor: pointer; }
-.option:active { cursor: pointer; background-color: rgb(85, 85, 85); color: gold; }
+.option:hover {  box-shadow: -5px 7px 6px 1px rgb(85, 85, 85); max-height: 200px; }
+.form-btn { cursor: pointer; margin: 0.25rem 0rem; padding: 0.25rem 0.5rem; border: 0; line-height: 1.2; 
+            border-radius: 0.25rem; color: white; font-family: inherit; font-size: 1rem;
+            white-space: nowrap; background: gray; outline: none; }
+.form-btn--big { margin: 0.25rem 0rem; padding: 0.25rem 0.5rem; border: 0; line-height: 1.6; 
+                 border-radius: 0.25rem; font-size: 1.2rem; }
+.w-131 { width: 131px; }
+.form-btn--label { font-size: 1rem; line-height: 1.2; margin: 0.25rem 0rem; padding: 0.25rem 0.5rem; }
+.form-btn:hover { background-color: lightgray; }
 .icon { border: gold solid 5px; padding: 5px; width: 68px; font-size: 3em; 
         margin: 0px 10px 0px 0px; 
       }
 .text { font-size: 1.3em; padding: 23px; width: 80%; text-align: left; }
 .text > h4 { margin-bottom: 5px; }
+.text > p { margin-bottom: 4px; }
+.text > form { max-width: 100%; display: none; }
+.text > form > div { clear: both; width: 40%; }
+.text > form > div > label { float: left; margin: 4px 0; padding-right: 15px; }
+.text > form > div > input { float: right; margin: 4px 0; }
+.option:hover .text > form { display: block; height: 0%; flex-wrap: wrap; width: 100%; }
 .games-container { margin-bottom: 25px; }
 
 /* Page: Results */
+
 /* Upper Info */
 .result-score { text-align: center; margin-bottom: 20px; }
-.display-menu { display: flex; justify-content: space-between; width: 80%; }
-.display-option { border: black solid 2px; padding: 5px; text-align: center; font-size: 1.4em; 
+.display-menu { display: flex; justify-content: center; width: 80%; }
+.display-toggle { border: black solid 2px; padding: 5px; text-align: center; font-size: 1.4em; 
                   border-radius: 4px; line-height: 32px; vertical-align: middle; 
                 }
-.display-option:hover { cursor: pointer; background-color: rgb(85, 85, 85); color: gold; }
+.display-toggle:hover { cursor: pointer; background-color: rgb(85, 85, 85); color: gold; }
 /* Table */
 .result-table { font-size: 1.5em; width: 80%; margin: 25px 0px 25px 0px; }
 .row-correct { background-color: lightgreen; padding: 100px; }
@@ -100,7 +132,7 @@ td, th { text-align: center; padding: 30px 1px 30px 1px; }
            vertical-align: middle;
          }
 .control:hover { cursor: pointer; background-color: rgb(85, 85, 85); color: gold; }
-.results { color: inherit; text-decoration: none; }
+.results { color: white; text-decoration: none; }
 /* Game Info Overlay */
 .overlay { position: fixed; display: none; width: 100%; height: 100%; top: 0; left: 0; right: 0; 
            bottom: 0; background-color: rgba(0,0,0,0.5); z-index: 2; cursor: pointer;
@@ -153,25 +185,31 @@ td, th { text-align: center; padding: 30px 1px 30px 1px; }
                 margin-top: 25px; 
               }
 #profile-top { display: inline-flex; width: 100%; padding: 10px; }
-#profile-top > div { width: 33%; text-align: center; background-color: rgb(255, 250, 125); 
-                     font-size: 1.6em; margin-right: 10px; padding: 5px;
+#profile-user { width: 33%; text-align: center; background-color: rgb(255, 250, 125); 
+                     font-size: 1.6em; margin-right: 10px; padding: 5px; border-radius: 4px;
+                     border: black solid 2px;
                    }
 #profile-user > p { font-size: 0.7em; margin: 5px 0px 5px 0px; }
-#profile-top > p { width: 67%; background-color: lightgreen; font-size: 1.2em; padding: 5px; }
+#profile-info { width: 67%; background-color: lightgreen; font-size: 1.3em; padding: 5px; 
+                   border-radius: 4px; border: black solid 2px;
+                 }
+#profile-info > p { margin-bottom: 6px; }
 #profile-bottom { display: inline-flex; width: 100%; padding: 10px; }
 #overall { width: 33%; display: flex; flex-direction: column; background-color: lightblue; 
-           text-align: center; margin-right: 10px; padding: 5px; 
+           text-align: center; margin-right: 10px; padding: 5px; border-radius: 4px;
+           border: black solid 2px;
          }
 #overall > h4 { font-size: 2em; margin-bottom: 10px; }
 #overall-data { display: flex; justify-content: center; text-align: center; }
 #overall-data > div { font-size: 2em; }
 #divider { background-color: black; width: 3px; margin-left: 15px; margin-right: 15px; }
 
-#form-container { width: 67%; display: flex; background-color: salmon; }
+#form-container { width: 67%; display: flex; background-color: salmon; border-radius: 4px;
+                  border: black solid 2px; }
 #profile-form { width: 100%; display: flex; flex-direction: column; padding: 5px; }
 #form-top { width: 100%; display: inline-flex; font-size: 1.4em; margin-bottom: 10px; }
 #form-top > p { margin-right: 10px; }
-.myslider { -webkit-appearance: none; background: ivory; height: 20px; width: 40%; 
+.myslider { -webkit-appearance: none; background: white; height: 20px; width: 40%; 
             margin-right: 10px; border-radius: 10px; outline: none;
           }
 .myslider:focus { box-shadow: 0 0 0 1pt  lightskyblue; }
@@ -184,10 +222,6 @@ td, th { text-align: center; padding: 30px 1px 30px 1px; }
 #gametype-filter > p, #gametype-filter > select { margin-right: 15px; }
 #gametype-filter > select { padding: 3px; }
 #form-submit { display: flex; }
-#filter-submit { margin-right: 15px; padding: 5px; border: black solid 2px; 
-                 background-color: lightgrey; 
-               }
-#filter-submit:hover { cursor: pointer; opacity: 0.9; }
 
 /* Profile Table */
 .row-perfect { background-color: lightgreen; }
@@ -196,26 +230,36 @@ td, th { text-align: center; padding: 30px 1px 30px 1px; }
 .row-zero { background-color: lightcoral; }
 
 
+@media (max-width: 1000px) {
+    .text > form > div { width: 70%; }
+}
 
 @media (max-width: 800px) { 
-  .form-inline .rego { margin: 10px 0; } 
-  .form-inline { flex-direction: column; align-items: stretch; }
-  .choices { flex-direction: column; } 
-  .navbar-container { font-size: 9px; }
-  .option { width: 95%; }
-  .text { padding: 23px 10px; }
-  .controls { flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap;
-              width: 100%; 
+    .form-inline .rego { margin: 10px 0; } 
+    .form-inline { flex-direction: column; align-items: stretch; }
+    .choices { flex-direction: column; } 
+    .navbar-container { font-size: 9px; }
+    .option { width: 95%; }
+    .text { padding: 23px 10px; }
+    .controls { flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap;
+                width: 100%; 
             }
-  .control { margin: 5px; }
-  .navbar { align-items: center; width: 100%; flex-direction: column; }
-  .navlinks { justify-content: space-evenly; }
-  #form-bottom { display: flex; flex-direction: column; }
-  #divider { background-color: none; margin: 0px; }
-  #overall-data { flex-direction: column; }
-  #overall-data > div { margin-bottom: 5px; }
-  td, th { text-align: center; font-size: 0.75em; }
-  .profile-content { width: 100%; }
-  .result-table { width: 100%; }
-  content { width: 100%; }
+    .control { margin: 5px; }
+    .navbar { align-items: center; width: 100%; flex-direction: column; }
+    .navlinks { justify-content: space-evenly; }
+    #form-bottom { display: flex; flex-direction: column; }
+    #divider { background-color: none; margin: 0px; }
+    #overall-data { flex-direction: column; }
+    #overall-data > div { margin-bottom: 5px; }
+    td, th { text-align: center; font-size: 0.75em; }
+    .profile-content { width: 100%; }
+    .result-table { width: 100%; }
+    content { width: 100%; }
+    .text > form > div { width: 85%; }
+}
+
+@media (max-width: 650px) {
+    .option:hover { max-height: 250px; }
+    .text > form > div { width: 60%; }
+    .text > form > div > input { float: left; }
 }
