@@ -5,6 +5,7 @@ from models import Question, Base
 from random import randint, shuffle
 from queries import (engine, session_scope, register_user, update_gradebook,
                      get_questions, profile_table, search_users, grades_for)
+from sys import getsizeof
 
 
 # Reset Database
@@ -110,6 +111,9 @@ def load_list(the_list):
 def test_all_sql():
     foo = get_questions("preps")
     print(type(foo))
+
+    bar = get_questions("gender")
+    print(getsizeof(bar))
 
     register_user("derek2", "pppoo")
     register_user("anni5", "dogs")
