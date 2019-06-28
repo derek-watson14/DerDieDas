@@ -5,7 +5,7 @@
 {% block content %}
   <div class="content-container">
     <div class="content profile-content">
-      <h5 class="page-head">Hello, {{ session["username"] }}!</h3>
+      <h5 class="page-head">Profile Page: '{{ session["username"] }}'</h3>
       <div id="profile-menu">
         <div id="profile-top">
             <div id="profile-user">
@@ -13,14 +13,16 @@
                 <h2 id="user-user">{{ session["username"] }}</h2>
                 <p>Registered: {{ session["reg_date"] }}</p>
             </div>
-            <p>The table below contains a full record of the questions you have answered. 
-                You can see how many times you have answered each question and the percentage of times you 
-                were correct. Use this information to focus on your weaker questions.
-            </p>
+            <div id="profile-info">
+                <p>The table below contains a full record of the questions you have answered. 
+                    You can see how many times you've answered each question and the percentage of times you 
+                    were correct. Use this information to focus on your weaker questions </p>
+                <p>Note: The table is sortable by it's headers.</p>
+            </div>
         </div>
         <div id="profile-bottom">
             <div id="overall">
-                <h4>Overall Grade:</h4>
+                <h4>Overall Score:</h4>
                 <div id="overall-data">
                     <div>
                         <h4 id="overall-attempts"></h4>
@@ -47,14 +49,14 @@
                             <select name="gametypes" id="gametypes">
                                 <option value="all">All</option>
                                 <option value="gender">Genders</option>
-                                <option value="preps">Preposisions</option>
-                                <option value="endings">Word Endings</option>
+                                <option value="preps">Prepositions</option>
+                                <option value="endings">Gender Indicators</option>
                                 <option value="articles">Articles</option>
                             </select>
                         </div>
                     </div>
                     <div id="form-submit">
-                        <button type="button" id="filter-submit" onclick="displayTable()">Refresh Table</button>
+                        <button type="button" class="form-btn" id="filter-submit" onclick="displayTable()">Refresh Table</button>
                     </div>
                 </form>
             </div>
@@ -64,6 +66,7 @@
     </div>
   </div>
 
+  <script type="text/javascript" src="../static/scripts/table-sorter.js"></script>
   <script type="text/javascript" src="../static/scripts/profile.js"></script>
   <script type="text/javascript">
     document.getElementById("profile").classList.add('active');
