@@ -1,0 +1,13 @@
+<div>
+    <label for="setSize">Set Size: </label>
+    <input type="number" id="setSize" name="setSize">
+</div>
+{% if session["user_id"] %}
+<div>
+    <label for="maxScore">Max Score: </label>
+    <input type="number" id="maxScore" name="maxScore">
+</div>
+{% endif %}
+<div>
+    <button class="form-btn" onclick="localStorage.clear()">Start Game</button>
+</div>
