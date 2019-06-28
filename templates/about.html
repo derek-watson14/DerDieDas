@@ -9,39 +9,103 @@
             <div class="article">
                 <div class="article-section origin">
                     <h3 class="section-head">Origin</h3>
-                    <div class="section-text">
-                        <p>I created <span class="logoder">Der</span><span class="logodie">Die</span><span class="logodas">Das</span> in 2019. I had just fished 
-                            HarvardX's CS50: Introduction to Computer Science class on edX. I was also studying German at a lannguage school in Würzburg, a 
-                            city in southern Germany. Learning German presents the same problem as leaning any new language, in that there is a lot of unfamiliar
-                            grammar to memorize. In addition, German has three noun genders and four cases which effect the sentance structure in a way unfamiliar
-                            to native English speakers. These cases and genders are "attached" to different nouns and prepoisitions in a way that can only be learned 
-                            by rote memorization. I wanted to put my new programming skills to use and develop an app which would help me memorize these gramatic 
-                            concepts.
-                        </p>
+                    <div class="section-content">
+                        <details class="sc-subsection" open>
+                            <summary class="sc-subsection__summary">Why this?</summary>
+                            <p>I created <strong><span class="logoder">Der</span><span class="logodie">Die</span><span class="logodas">Das</span></strong> in 2019. 
+                                I had just finished HarvardX's <a href="https://www.edx.org/course/cs50s-introduction-to-computer-science" target="_blank">CS50: Introduction to Computer Science</a>
+                                class on edX. I was also studying German at a lannguage school in Würzburg, a city in southern Germany. Learning German presents the same problem
+                                as leaning any new language, in that there is a lot of unfamiliar grammar to memorize. In addition, German has three noun genders and
+                                four cases which effect the sentance structure in a way unfamiliar to native English speakers. These cases and genders are "attached"
+                                to different nouns and prepoisitions in a way that can only be learned by rote memorization. I wanted to put my new programming skills
+                                to use and develop an app which would help me memorize these gramatic 
+                                concepts.</p>
+                        </details>
                     </div>
                 </div>
                 <div class="article-section tech">
                     <h3 class="section-head">Technology</h3>
-                    <div class="section-text">
-                        <p>To create this application I used Python and Postgresql on the back end and JavaScript, CSS and HTML on the front end. The code for this project
-                            is admittedly messy. It is my first "large" project that I've built from the ground up. I didn't use a front end JavaScript framework or CSS 
-                            preprocessors. On the backend I used Python's Flask library for HTML templating and SQLAlchemy for database management. I built ORM models, but 
-                            queried with plain SQL to better learn the syntax. The source code for this project can be found 
-                            <a href="https://github.com/derek-watson14/DerDieDas">here</a>, on my GitHub account.
-                        </p>
+                    <div class="section-content">
+                        <details class="sc-subsection" open>
+                            <summary class="sc-subsection__summary">Backend</summary>
+                            <p>The backend of this application uses <strong>Python</strong>, <strong>Flask</strong> and <strong>PostgreSQL</strong> for a database. 
+                                Flask is a Python microframework for the web that uses Jinja 2 as a templating language. Using Flask with Python allows me to serve 
+                                web pages which can change based on factors like a user being logged in or a game being in progress. PostgreSQL is where I store the 
+                                questions for each game type, user information and user scores and grades. The database is managed with a Python library called
+                                SQLAlchemy, which I also used for ORM. The tables were created with SQLAlchemy models, but queries are done in pure SQL because I
+                                wanted to learn SQL syntax and not just SQLAlchemy.</p>
+                        </details>
+                        <details class="sc-subsection" open>
+                            <summary class="sc-subsection__summary">Frontend</summary>
+                            <p>The frontend was built with <strong>HTML5</strong>, <strong>CSS3</strong> and <strong>JavaScript</strong>. I choose not to use a front end 
+                                framework or CSS preprocessors because I wanted to focus on learning the basics for this project. I was able to do all the DOM manipulation
+                                that I needed with pure JavaScript. Even AJAX requests were done with the <em>XMLHttpRequest()</em> object. In the future I would like to 
+                                try using some of the newer frontend technologies like Javascript frameworks and CSS preprocessors. More about that in the learning section.</p>
+                        </details>
+                        <details class="sc-subsection" open>
+                            <summary class="sc-subsection__summary">Versions and Code</summary>
+                            <p>For my first project, I'm aware my code doesn't follow best practices. In fact, experienced developers woud probably consider it to be disorganized.
+                                Originally I had planned to go through and refactor everything to make it more presentable, but in the end I've decided to move on to new projects
+                                and learn from my mistakes with a green field. <strong>Git</strong> was used throughout the project to track versions; the current code is viewable
+                                <a href="https://github.com/derek-watson14/DerDieDas" target="_blank">here</a>, on my GitHub account.</p>
+                        </details>
+                        <hr>
+                        <div class="sc-subsection--logos">
+                            <div>
+                                <img class="lang-logo" src="../static/style/images/HTML5.svg" title="HTML5"/>                            
+                                <img class="lang-logo" src="../static/style/images/CSS3.svg" title="CSS3"/>
+                                <img class="lang-logo" src="../static/style/images/Javascript.svg" title="JavaScript"/>
+                                <img class="lang-logo" src="../static/style/images/Python.svg" title="Python"/>
+                                <img class="lang-logo" src="../static/style/images/flask.svg" title="Flask"/>
+                                <img class="lang-logo" src="../static/style/images/postgresql.svg" title="PostgreSQL"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="article-section learn">
-                    <h3 class="section-head">Learning</h3>
-                    <div class="section-text">
-                        <p>I learned a ton while creating this project, before starting I had very limited JavaScript knowledge. Now I am comfortable with things like arrow
-                            functions, forEach, map, filter, find and reduce. I've also learned a lot about JSON, AJAX (without jQuery) Local Storage on the browser and of course
-                            manipulating the DOM. I had never used a database outside of SQLite before this project. I had to download Postgresql on my machine and
-                            learn how to connect to it with Python. I also learned how to build ORM models to create my tables. Besides that in Python I practiced list 
-                            comprehensions, ternary expressions and other useful features of the language. I knew only the absolute basics of CSS and HTML before hand. 
-                            Now I have a working understanding of when to use different HTML tags and in CSS I have learned about media queries, flexbox and many other
-                            small and large CSS tricks.
-                        </p>
+                    <h3 class="section-head">Future Learning</h3>
+                    <div class="section-content">
+                        <details class="sc-subsection" open>
+                            <summary class="sc-subsection__summary">CSS and HTML</summary>
+                            <p>During this project I significantly increased my understanding of CSS and HTML through trail and error, StackOverflow and parts of
+                                the useful HTML and CSS tutorial over at <a href="https://internetingishard.com/" target="_blank">Interneting Is Hard</a>. I now feel pretty comfortable
+                                using Flexbox, and I know a few CSS tricks like <em>transition</em>, <em>media queries</em> and relative sizing with <em>em</em> and 
+                                <em>rem</em>, among other things. </p>
+                            <p>In the future I woud like to use a CSS naming convention like <em>BEM</em> to stay more organized and a CSS preprocessor
+                                like SASS. I am also interested in trying to build a site using a <em>functional CSS framework</em>, namely TailwindCSS. I am intruiged
+                                by the idea of using utility classes and components to make CSS more reusable and scalable.</p>
+                        </details>
+                        <details class="sc-subsection" open>
+                            <summary class="sc-subsection__summary">JavaScript</summary>
+                            <p>During the project I went from almost no JavaScript to being comforable manipulating the DOM using Element class methods
+                                like <em>Element.querySelector()</em>, using anonymous functions and arrow syntax, using higher order functions like <em>map()</em> and 
+                                <em>filter()</em> on iterators and other tricks like <em>forEach</em>. I also learned about <em>JSON</em>, <em>Local Storage</em> and 
+                                AJAX using <em>XMLHttpRequest()</em>.</p>
+                            <p>In the futrure I would like to try working with a Javascript framework like React, Vue or Angular, though I've not yet chosen
+                                which one of those to look into first. I hope it can speed my development process and add more structure to my applications as a whole. That being 
+                                said, I want to be careful that I continue learing JavaScript, and not just frameworks.</p>
+                        </details>
+                        <details class="sc-subsection" open>
+                            <summary class="sc-subsection__summary">Backend and Database</summary>
+                            <p>During the project I learned quite a bit about using Flask and Jinja 2 to serve websites. I love the ability to template HTML pages
+                                with these tools. Having easy access to extras like password encryption and Sessions is a bonus. My understanding of some more complex SQL like JOIN
+                                also improved, which was necessary to access the database I built using ORM models provided by SQLAlchemy. 
+                                Finally, I learned more basic Python syntax like list comprehensions, class declarations and function decorators.</p>
+                            <p>In the future I would like to build another app with Flask and possibly look into what Python's <em>Django</em> framework can offer. Outside of 
+                                Python backends, I would like to build a backend with <em>Node</em> and <em>Express</em> in a future project. I would also like to learn more complex SQL
+                                syntax and dip my feet into NoSQL databases like <em>MongoDB</em>. Site security is also a theme I would like to explore further.</p>
+                        </details>
+                        <hr>
+                        <div class="sc-subsection--logos">
+                            <div>
+                                <img class="lang-logo" src="../static/style/images/angular.svg" title="Angular"/>                            
+                                <img class="lang-logo" src="../static/style/images/react.svg" title="React"/>
+                                <img class="lang-logo" src="../static/style/images/sass.svg" title="Sass"/>
+                                <img class="lang-logo" src="../static/style/images/mysql.svg" title="MySQL"/>
+                                <img class="lang-logo" src="../static/style/images/django.svg" title="Django"/>
+                                <img class="lang-logo" src="../static/style/images/bem.svg" title="BEM"/>
+                            </div>
+                        </div>         
                     </div>
                 </div>
             </div>
