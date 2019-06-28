@@ -1,0 +1,28 @@
+{% extends "game-layout.html" %}
+
+{% block title %}Geschlechtsmuster{% endblock %}
+
+{% block gameSpecific %}
+<div class="content-container">
+  <div class="content">
+        {% include "partials/gm-info-disp.html" %}
+        <div class="word-display">
+            <h1 class="current"></h1>
+            <h1 class="no-blank blank"></h1>
+        </div>
+        <h4 class="hint"></h4>
+        <div class="choices">
+            <div class="choice ansA" onclick="game.interpretChoice(this)"></div>
+            <div class="choice ansB" onclick="game.interpretChoice(this)"></div>
+            <div class="choice ansC" onclick="game.interpretChoice(this)"></div>
+        </div>
+{% endblock %}
+{% block uniqueJS %}
+    <script type="text/javascript">
+        let blank = "";
+
+        function generateExample(current) {
+        return `z. B. <strong>${current["example"]} ist ${current["answer"]}</strong>`;
+        };
+    </script>
+{% endblock %}

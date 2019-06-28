@@ -1,0 +1,30 @@
+{% extends "game-layout.html" %}
+
+{% block title %}Prepositions{% endblock %}
+
+{% block gameSpecific %}
+<div class="content-container">
+    <div class="content">
+        {% include "partials/gm-info-disp.html" %}
+        <div class="word-display">
+            <h1 class="current"></h1>
+            <h1 class="prep-case blank">ist _____</h1>
+        </div>
+        <h4 class="hint"></h4>
+        <div class="choices">
+            <div>
+                <div class="choice ansA" onclick="game.interpretChoice(this)"></div>
+                <div class="choice ansB" onclick="game.interpretChoice(this)"></div>
+            </div>
+            <div>
+                <div class="choice ansC" onclick="game.interpretChoice(this)"></div>
+                <div class="choice ansD" onclick="game.interpretChoice(this)"></div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block uniqueJS %}
+  <script type="text/javascript">
+    let blank = "ist _____";
+  </script>
+{% endblock %}

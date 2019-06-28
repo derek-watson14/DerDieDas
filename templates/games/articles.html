@@ -1,0 +1,33 @@
+{% extends "game-layout.html" %}
+
+{% block title %}Articles{% endblock %}
+
+{% block gameSpecific %}
+<div class="content-container">
+    <div class="content">
+        {% include "partials/gm-info-disp.html" %}
+        <div class="word-display">
+            <h1 class="current art-question"></h1>
+            <h1 class="blank">_____</h1>
+        </div>
+        <div class="choices">
+            <div>
+                <div class="choice ansA" onclick="game.interpretChoice(this)"></div>
+                <div class="choice ansB" onclick="game.interpretChoice(this)"></div>
+            </div>
+            <div>
+                <div class="choice ansC" onclick="game.interpretChoice(this)"></div>
+                <div class="choice ansD" onclick="game.interpretChoice(this)"></div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block uniqueJS %}
+    <script type="text/javascript">
+        let blank = "_____";
+
+        function generateQuestion(current) {
+            return `<span class="cap">${current["qinfo_2"]}</span> ${current["qinfo_1"]} article in ${current["qinfo_3"]}: `;
+        };
+    </script>
+{% endblock %}
