@@ -7,11 +7,17 @@
     <div class="content">
       <h2 class="page-head">Log In</h2>
       <form class="form-inline" action="/login" method="post">
-        <input class="rego" autocomplete="off" autofocus name="username" placeholder="Username" type="text">
-        <input class="rego" name="password" placeholder="Password" type="password">
-        <button class="control login-btn" type="submit">Log In</button>
+        <div class="login-section">
+            <label for="password">Username:</label>
+            <input class="rego" autocomplete="off" autofocus name="username" placeholder="Username" type="text">
+        </div>
+        <div class="login-section">
+            <label for="password">Password:</label>
+            <input class="rego" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="login-btn" type="submit">Log In</button>
       </form>
-      <a href="{{ url_for('register') }}">Don't have an account? Register here.</a>
+      <a class="rego-link" href="{{ url_for('register') }}">Don't have an account? Register here.</a>
     </div>
   </div>
   <script type="text/javascript">
