@@ -22,7 +22,7 @@ def get_u_id():
     return session["user_id"] if session.get("user_id") else None
 
 
-@app.route("/")
+@app.route("/new-game")
 def newGame():
     return render_template("new-game.html")
 
@@ -95,6 +95,7 @@ def logout():
     return redirect("/login")
 
 
+@app.route("/")
 @app.route("/about")
 def about():
     return render_template("about.html")
