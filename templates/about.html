@@ -4,6 +4,48 @@
 
 {% block content %}
   <div class="content-container">
+        <div class="content">
+            <h1 class="page-head">About This Project</h1>
+            <div class="article">
+                <div class="article-section origin">
+                    <h3 class="section-head">Origin</h3>
+                    <div class="section-text">
+                        <p>I created <span class="logoder">Der</span><span class="logodie">Die</span><span class="logodas">Das</span> in 2019. I had just fished 
+                            HarvardX's CS50: Introduction to Computer Science class on edX. I was also studying German at a lannguage school in Würzburg, a 
+                            city in southern Germany. Learning German presents the same problem as leaning any new language, in that there is a lot of unfamiliar
+                            grammar to memorize. In addition, German has three noun genders and four cases which effect the sentance structure in a way unfamiliar
+                            to native English speakers. These cases and genders are "attached" to different nouns and prepoisitions in a way that can only be learned 
+                            by rote memorization. I wanted to put my new programming skills to use and develop an app which would help me memorize these gramatic 
+                            concepts.
+                        </p>
+                    </div>
+                </div>
+                <div class="article-section tech">
+                    <h3 class="section-head">Technology</h3>
+                    <div class="section-text">
+                        <p>To create this application I used Python and Postgresql on the back end and JavaScript, CSS and HTML on the front end. The code for this project
+                            is admittedly messy. It is my first "large" project that I've built from the ground up. I didn't use a front end JavaScript framework or CSS 
+                            preprocessors. On the backend I used Python's Flask library for HTML templating and SQLAlchemy for database management. I built ORM models, but 
+                            queried with plain SQL to better learn the syntax. The source code for this project can be found 
+                            <a href="https://github.com/derek-watson14/DerDieDas">here</a>, on my GitHub account.
+                        </p>
+                    </div>
+                </div>
+                <div class="article-section learn">
+                    <h3 class="section-head">Learning</h3>
+                    <div class="section-text">
+                        <p>I learned a ton while creating this project, before starting I had very limited JavaScript knowledge. Now I am comfortable with things like arrow
+                            functions, forEach, map, filter, find and reduce. I've also learned a lot about JSON, AJAX (without jQuery) Local Storage on the browser and of course
+                            manipulating the DOM. I had never used a database outside of SQLite before this project. I had to download Postgresql on my machine and
+                            learn how to connect to it with Python. I also learned how to build ORM models to create my tables. Besides that in Python I practiced list 
+                            comprehensions, ternary expressions and other useful features of the language. I knew only the absolute basics of CSS and HTML before hand. 
+                            Now I have a working understanding of when to use different HTML tags and in CSS I have learned about media queries, flexbox and many other
+                            small and large CSS tricks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
   </div>
   <script type="text/javascript">
     document.getElementById("about").classList.add('active');
