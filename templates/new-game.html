@@ -7,13 +7,15 @@
     <div class="content games-container">
         <h2 class="page-head cap">New Game</h2>
         <div class="ng-info">
-            <h4>Chooose a game type and press 'Start Game'</h4>
-            <p>The <strong>'Set Size'</strong> option allows you to limit the number of questions in the game. 
-                <span class='ul'>For example,</span> a set size of ten will give you ten random questions.
-                If left blank, all possible questions will be shown until the 'results' button is pressed.</p> 
-            <p>If you're logged in, the <strong>'Max Score'</strong> option allows you to filter out questions you have done well on in the past.
-                <span class='ul'>For example,</span> if 'Max Score' is set to 99 you will not recieve any questions you have scored 100% on.
-                If left blank, any question in the set can be shown. </p>
+            <div>
+                <h4>Chooose a game type and press 'Start Game'</h4>
+                <p><strong>'Set Size'</strong> allows you to limit the number of questions in the game. 
+                    For example, a set size of ten will give you ten random questions.
+                    If left blank, all possible questions will be shown until the 'results' button is pressed.</p>
+                <p><strong>'Max Score'</strong> allows you to filter out questions you have done well on in the past.
+                    For example, if 'Max Score' is set to 99 you will not recieve any questions on which your score is 100%.
+                    If left blank, any question in the set can be shown. Must be logged in to access. </p>
+            </div>
         </div>
         <div class="option">
             <div>
@@ -21,7 +23,7 @@
             </div>
             <div class="text">
                 <h4>Noun Genders:</h4>
-                <p>Test your knowledge of noun genders. </p>
+                <p>Guess if a noun uses 'der', 'die' or 'das'.</p>
                 <form action="{{ url_for('run_game', gametype='gender') }}" method="post">
                     {% include 'partials/ng-form-content.html' %}
                 </form>
@@ -33,7 +35,7 @@
             </div>
             <div class="text">
                 <h4>Prepositions:</h4>
-                <p>Test your knowledge of preposition cases.</p>
+                <p>Guess which case (accusative, dative, both or genitive) accomponies which preposition. </p>
                 <form action="{{ url_for('run_game', gametype='preps') }}" method="post">
                     {% include 'partials/ng-form-content.html' %}
                 </form>
@@ -45,7 +47,7 @@
             </div>
             <div class="text">
                 <h4>Gender Indicators:</h4>
-                <p>Practice recognizing the patterns which can identify noun genders. </p>
+                <p>Practice recognizing the suffixes and rules that can help identify noun gender. </p>
                 <form action="{{ url_for('run_game', gametype='endings') }}" method="post">
                     {% include 'partials/ng-form-content.html' %}
                 </form>
