@@ -1,5 +1,4 @@
 from config import DATABASE_URI
-# from models import Record
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from contextlib import contextmanager
@@ -51,17 +50,34 @@ def search_users(username):
 
 
 # Altering Table Questions:
-def get_questions(gametype, set_size=None):
-    if set_size is None:
-        return db.execute('SELECT * '
-                          'FROM questions '
-                          'WHERE gametype = :gametype',
-                          {"gametype": gametype}).fetchall()
-    else:
-        return db.execute('SELECT * '
-                          'FROM questions '
-                          'WHERE gametype = :gametype',
-                          {"gametype": gametype}).fetchmany(set_size)
+def get_questions(gametype):
+    return db.execute('SELECT * '
+                      'FROM questions '
+                      'WHERE gametype = :gametype',
+                      {"gametype": gametype}).fetchall()
+
+
+def filter_qs(gametype, max_score, u_id):
+    too_high = db.execute('SELECT questions.q_id '
+                          'FROM gradebook '
+                          'INNER JOIN questions '
+                          'ON questions.q_id = gradebook.rq_id '
+                          'WHERE gradebook.ru_id = :ru_id '
+                          'AND questions.gametype = :gametype '
+                          'AND gradebook.score > :max_score',
+                          {"ru_id": u_id, "gametype": gametype,
+                           "max_score": max_score}).fetchall()
+
+    too_high = tuple([item.q_id for item in too_high])
+
+    questions = db.execute('SELECT * '
+                           'FROM questions '
+                           'WHERE q_id NOT IN :too_high '
+                           'AND gametype = :gametype',
+                           {"too_high": too_high,
+                            "gametype": gametype}).fetchall()
+
+    return questions
 
 
 # Altering Table Gradebook:
@@ -79,19 +95,31 @@ def update_gradebook(ru_id, rq_id, correct):
 
 # Needs to be rewritten as insert into
 def new_user_record(ru_id, rq_id, correct):
-    db.execute('INSERT INTO gradebook (ru_id, rq_id, correct, attempts)'
-               'VALUES (:ru_id, :rq_id, :correct, :attempts)',
+    db.execute('INSERT INTO gradebook (ru_id, rq_id, correct, attempts, score)'
+               'VALUES (:ru_id, :rq_id, :correct, :attempts, :score)',
                {"ru_id": ru_id, "rq_id": rq_id,
-                "correct": correct, "attempts": 1})
+                "correct": correct, "attempts": 1,
+                "score": percentage(correct, 1)})
     db.commit()
 
 
 def update_exsisting(r_id, correct):
     db.execute(f'UPDATE gradebook '
-               'SET attempts = attempts + 1, correct = correct + :correct '
+               'SET attempts = attempts + 1, correct = correct + :correct, '
+               'score = :score '
                'WHERE r_id = :r_id',
-               {"correct": correct, "r_id": r_id})
+               {"correct": correct, "r_id": r_id,
+                "score": calc_score(r_id, correct)})
     db.commit()
+
+
+def calc_score(r_id, correct):
+    record = db.execute('SELECT * '
+                        'FROM gradebook '
+                        'WHERE r_id = :r_id',
+                        {"r_id": r_id}).fetchone()
+
+    return percentage(record.correct + correct, record.attempts + 1)
 
 
 def grades_for(ru_id):
@@ -103,8 +131,8 @@ def grades_for(ru_id):
 
 
 def profile_table(ru_id):
-    grades = db.execute('SELECT gradebook.correct, gradebook.attempts, '
-                        'questions.q_id, questions.gametype, '
+    grades = db.execute('SELECT gradebook.attempts, gradebook.correct, '
+                        'gradebook.score, questions.q_id, questions.gametype, '
                         'questions.qinfo_1, questions.qinfo_2, '
                         'questions.qinfo_3, questions.answer '
 
@@ -119,8 +147,9 @@ def profile_table(ru_id):
 # Changing database ojects to a JSON understandable format
 def serialize_grades(item):
     return {
-        'correct': int(item.correct),
         'attempts': int(item.attempts),
+        'correct': int(item.correct),
+        'score': int(item.score),
         'q_id': int(item.q_id),
         'gametype': item.gametype,
         'qinfo_1': item.qinfo_1,
@@ -151,5 +180,10 @@ def serialize_record(item):
         'ru_id': int(item.ru_id),
         'rq_id': int(item.rq_id),
         'correct': int(item.correct),
-        'attempts': int(item.attempts)
+        'attempts': int(item.attempts),
+        'score': int(item.score)
     }
+
+
+def percentage(part, whole):
+    return int(100 * float(part)/float(whole))
