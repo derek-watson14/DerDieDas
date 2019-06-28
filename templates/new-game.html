@@ -5,43 +5,64 @@
 {% block content %}
 <div class="content-container">
     <div class="content games-container">
-        <h2 class="page-head"> - New Game - </h2>
-        <a class="option" href="{{ url_for('run_game', gametype='gender') }}" onclick="localStorage.clear()">
+        <h2 class="page-head cap">New Game</h2>
+        <div class="ng-info">
+            <h4>Chooose a game type and press 'Start Game'</h4>
+            <p>The <strong>'Set Size'</strong> option allows you to limit the number of questions in the game. 
+                <span class='ul'>For example,</span> a set size of ten will give you ten random questions.
+                If left blank, all possible questions will be shown until the 'results' button is pressed.</p> 
+            <p>If you're logged in, the <strong>'Max Score'</strong> option allows you to filter out questions you have done well on in the past.
+                <span class='ul'>For example,</span> if 'Max Score' is set to 99 you will not recieve any questions you have scored 100% on.
+                If left blank, any question in the set can be shown. </p>
+        </div>
+        <div class="option">
             <div>
-                <h1 class="icon">G</h1>
+                <h1 class="icon">N</h1>
             </div>
             <div class="text">
                 <h4>Noun Genders:</h4>
                 <p>Test your knowledge of noun genders. </p>
+                <form action="{{ url_for('run_game', gametype='gender') }}" method="post">
+                    {% include 'partials/ng-form-content.html' %}
+                </form>
             </div>
-        </a>
-        <a class="option" href="{{ url_for('run_game', gametype='preps') }}" onclick="localStorage.clear()">
+        </div>
+        <div class="option">
             <div>
                 <h1 class="icon">P</h1>
             </div>
             <div class="text">
                 <h4>Prepositions:</h4>
                 <p>Test your knowledge of preposition cases.</p>
+                <form action="{{ url_for('run_game', gametype='preps') }}" method="post">
+                    {% include 'partials/ng-form-content.html' %}
+                </form>
             </div>
-        </a>
-        <a class="option" href="{{ url_for('run_game', gametype='endings') }}" onclick="localStorage.clear()">
+        </div>
+        <div class="option">
             <div>
-                <h1 class="icon">E</h1>
+                <h1 class="icon">G</h1>
             </div>
             <div class="text">
                 <h4>Gender Indicators:</h4>
                 <p>Practice recognizing the patterns which can identify noun genders. </p>
+                <form action="{{ url_for('run_game', gametype='endings') }}" method="post">
+                    {% include 'partials/ng-form-content.html' %}
+                </form>
             </div>
-        </a>
-        <a class="option" href="{{ url_for('run_game', gametype='articles') }}" onclick="localStorage.clear()">
+        </div>
+        <div class="option">
             <div>
                 <h1 class="icon">A</h1>
             </div>
             <div class="text">
                 <h4>Articles:</h4>
                 <p>Given the case, gender and article type, choose the correct article. </p>
+                <form action="{{ url_for('run_game', gametype='articles') }}" method="post">
+                    {% include 'partials/ng-form-content.html' %}
+                </form>
             </div>
-        </a>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
