@@ -18,9 +18,15 @@ function activateRangeSlider() {
 function calculateOverall() {
     let ovr_att = document.getElementById("overall-attempts");
     let ovr_per = document.getElementById("overall-percentage");
-    let totals = userRecord.reduce((a, b) => ({attempts: a.attempts + b.attempts, correct: a.correct + b.correct}));
-    ovr_att.innerHTML = totals.attempts;
-    ovr_per.innerHTML = Math.round((totals.correct / totals.attempts) * 100).toString() + "%";
+    if (userRecord == undefined || userRecord.length == 0) {
+        ovr_att.innerHTML = "0";
+        ovr_per.innerHTML = "0%";
+    } else {
+        totals = userRecord.reduce((a, b) => ({attempts: a.attempts + b.attempts,
+                                               correct: a.correct + b.correct}));
+        ovr_att.innerHTML = totals.attempts;
+        ovr_per.innerHTML = Math.round((totals.correct / totals.attempts) * 100).toString() + "%";
+    };
 };
 
 
@@ -30,31 +36,6 @@ function displayTable() {
     let gametype = document.getElementById('gametypes');
     table.innerHTML = buildTable(limit.value, gametype.value);
     setTableSort();
-};
-
-
-function setTableSort() {
-    const getCellValue = (tr, index) => {
-        return tr.children[index].innerText || tr.children[index].textContent;
-    };
-
-    const comparer = (idx, asc) => (rowa, rowb) => ((txta, txtb) => {
-            if (txta.slice(-1) == "%" && txtb.slice(-1) == "%") txta = txta.slice(0, -1), txtb = txtb.slice(0, -1);
-            return txta !== '' && txtb !== '' && !isNaN(txta) && !isNaN(txtb) ? txta - txtb : txta.toString().localeCompare(txtb);
-        })(getCellValue(asc ? rowa : rowb, idx), getCellValue(asc ? rowb : rowa, idx)); 
-
-    const arrow = (order) => order ? "&#x1f809;" : "&#x1f80b;";
-        
-    document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
-        const table = th.closest('table');
-        Array.from(table.querySelectorAll('tr:nth-child(n+2)'))
-            .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
-            .forEach(tr => table.appendChild(tr) );
-        Array.from(th.parentNode.children).forEach(head => {
-            const headtext = head.innerHTML.replace(/(\w+).+/, "$1");
-            head.innerHTML = `${headtext}${head == th ? arrow(this.order = !this.order) : "-"}`;
-        });
-    })));
 };
 
 
@@ -79,13 +60,12 @@ function buildTable(filter=100, gametype="all") {
 };
 
 function createRow(item, filter) {
-    item["percentage"] = Math.round((item["correct"] / item["attempts"]) * 100);
-    let row = `<tr ${rowColor(item.percentage)}><td>${item["gametype"]}</td>
+    let row = `<tr ${rowColor(item.score)}><td>${item.gametype}</td>
                                                 <td>${questionText(item)}</td>
-                                                <td>${item["answer"]}</td>
-                                                <td>${item.percentage}%</td>
-                                                <td>${item["attempts"]}</td></tr>`;
-    if (item.percentage <= filter) return row;
+                                                <td>${item.answer}</td>
+                                                <td>${item.score}%</td>
+                                                <td>${item.attempts}</td></tr>`;
+    if (item.score <= filter) return row;
 };
 
 function rowColor(percentage) {
