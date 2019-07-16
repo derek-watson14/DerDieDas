@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import (Column, Integer, String, ForeignKey, UniqueConstraint, 
+from sqlalchemy import (Column, Integer, String, ForeignKey, UniqueConstraint,
                         DateTime)
 from sqlalchemy.sql import func
 
