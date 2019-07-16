@@ -67,9 +67,6 @@ tr:nth-child(n+2):hover {
 
 /* About */
 
-
-/* background-image: url("church.JPG"); background-repeat: repeat-y; */
-
 .article {
 	display: flex;
 	flex-direction: column;
@@ -473,7 +470,8 @@ th {
 /* Upper Info */
 
 .information {
-	display: flex;
+    display: flex;
+    flex-direction: row;
 	justify-content: space-between;
 	width: 85%;
 	height: 65px;
@@ -482,16 +480,17 @@ th {
 }
 
 .score {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .message-container {
-	text-align: right;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: right;
 }
 
 .tip {
-	font-size: 0.8em;
-	width: 100%;
+    font-size: 0.8em;
 }
 
 
@@ -1050,5 +1049,11 @@ th {
 	}
 	.text>form>div>input {
 		float: left;
-	}
+    }
+    .word-display {
+        font-size: 1.3em;
+    }
+    .information {
+        font-size: 1em;
+    }
 }
