@@ -1,10 +1,5 @@
-﻿# Scheme: 'postgres+psycopg2://<USERNAME>:<PASSWORD>@<IP_ADDRESS>:<PORT>/<DATABASE_NAME>'
-
-# DATABASE_URI = ('postgres+psycopg2://postgres:BrodyPST!!7'
-#                 '@localhost:5432/DerDieDas')
-
-DATABASE_URI = ('postgres://zuhaedrtmlfbxs:d52094c4b4f7e2bb25e550d9ae4df5ef70'
-                '8c1d6eadb0c2e62052355df81530a4@ec2-174-129-226-232.compute-1'
-                '.amazonaws.com:5432/de7jtg2am2vs3j')
+﻿DATABASE_URI = ('postgres://jzjhcrneevtwlo:2918fc1071217d38397116c4a9906fd5d38'
+                'ee775ee28a6342276349c73409705@ec2-174-129-227-80.compute-1.'
+                'amazonaws.com:5432/d4652tpkshk2hu')
 
 SECRET_KEY = '2\xf3\xd6\xbf\x85\x08@\x18\x9cG\x8a\x95\x06c\xb9('
