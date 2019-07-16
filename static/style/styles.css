@@ -2,7 +2,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; background-color: ivory; }
 .content-container { width: 100%; height: 100%; display: flex; justify-content: center; 
-                     align-items: flex-start; 
+                     align-items: flex-start; margin-top: 75px;
                    }
 .content { background-color: ivory; width: 75%; display: flex; justify-content: center; 
            flex-wrap: wrap; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 12px; 
@@ -43,7 +43,8 @@ tr:nth-child(n+2):hover { filter: brightness(110%); }
 /* Nav Bar */
 .navbar-container { background-color: rgb(85, 85, 85); width: 100%; padding: 15px 0; 
                     display: flex; justify-content: center; margin-bottom: 10px; 
-                    box-shadow: 0 0 6px 3px; font-size: 12px; 
+                    box-shadow: 0 0 6px 3px; font-size: 12px; position: fixed;
+                    top: 0;
                   }
 .navbar { width: 75%; background-color: rgb(85, 85, 85); padding: 0px 20px 0px 20px; 
           overflow: hidden; display: flex; justify-content: space-between; 
@@ -246,6 +247,7 @@ td, th { text-align: center; padding: 30px 1px 30px 1px; }
 }
 
 @media (max-width: 800px) { 
+    .content-container { margin-top: 105px; }
     .form-inline .rego { margin: 10px 0; } 
     .form-inline { flex-direction: column; align-items: stretch; }
     .choices { flex-direction: column; } 
