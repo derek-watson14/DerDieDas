@@ -491,6 +491,7 @@ th {
 
 .tip {
     font-size: 0.8em;
+    float: right;
 }
 
 
@@ -1052,8 +1053,27 @@ th {
     }
     .word-display {
         font-size: 1.3em;
+        padding: 10px 0px 10px 0px;
     }
     .information {
+        width: 100%;
+        height: 45px;
         font-size: 1em;
+        margin: 15px 0px 8px 0px;
+    }
+    .message-container {
+        flex: 1;
+    }
+    .score {
+        flex: 1;
+    }
+    .tip {
+        width: 85%;
+    }
+    .form-btn:active {
+        background-color: lightgray;
+    }
+    .form-btn:hover {
+        background-color: gray;
     }
 }
