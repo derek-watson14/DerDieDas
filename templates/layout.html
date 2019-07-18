@@ -18,5 +18,15 @@
         {% endif %}
         {% block content %}
         {% endblock %}
+        <script type="text/javascript">
+            function nav_thing() {
+                var navlinks = document.querySelector('.navlinks');
+                if (navlinks.className === 'navlinks') {
+                    navlinks.className += ' responsive';
+                } else {
+                    navlinks.className = 'navlinks';
+                }
+            }
+        </script>
     </body>
 </html>

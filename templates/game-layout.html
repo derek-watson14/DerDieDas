@@ -31,6 +31,14 @@
         <script type="text/javascript" src="../static/scripts/games.js"></script>
         <script type="text/javascript">
             document.getElementById("current-game").classList.add('active');
+            function nav_thing() {
+                var navlinks = document.querySelector('.navlinks');
+                if (navlinks.className === 'navlinks') {
+                    navlinks.className += ' responsive';
+                } else {
+                    navlinks.className = 'navlinks';
+                }
+            }
             let user_id = JSON.parse(' {{ user|tojson|safe }} ');
             let record, game;
             if (!localStorage.getItem("savedGame")) {
