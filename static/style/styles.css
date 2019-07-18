@@ -168,9 +168,7 @@ tr:nth-child(n+2):hover {
 .navbar-container {
 	background-color: rgb(85, 85, 85);
 	width: 100%;
-	padding: 15px 0;
-	display: flex;
-	justify-content: center;
+	padding: 5px 20px;
 	margin-bottom: 10px;
 	box-shadow: 0 0 6px 3px;
 	font-size: 12px;
@@ -178,19 +176,24 @@ tr:nth-child(n+2):hover {
 	top: 0;
 }
 
-.navbar {
-	width: 75%;
-	background-color: rgb(85, 85, 85);
-	padding: 0px 20px 0px 20px;
-	overflow: hidden;
-	display: flex;
-	justify-content: space-between;
+.navlinks {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-.navlogo {
-	padding-top: 5px;
-	font-size: 3em;
-	text-decoration: none;
+.navlinks .navlogo {
+    font-size: 3em;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: auto;
+    padding: 12px 0;
+}
+
+.navlinks .navlogo:hover {
+    background-color: inherit;
+    border: none;
 }
 
 .navlogo:hover {
@@ -212,10 +215,11 @@ tr:nth-child(n+2):hover {
 }
 
 .navlinks a {
-	float: left;
+    float: left;
+    display: block;
 	color: gold;
-	text-align: center;
-	padding: 12px 14px;
+    text-align: center;
+	padding: 14px 14px;
 	text-decoration: none;
 	font-size: 1.4em;
 	transition: all 200ms ease;
@@ -240,6 +244,33 @@ tr:nth-child(n+2):hover {
 	border-bottom: black solid 2px;
 }
 
+.navlinks .res-menu {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .navlinks a:not(:first-child) {
+        display: none;
+    }
+    .navlinks a.res-menu {
+        float: right;
+        display: block;
+    }
+    .navlinks.responsive {
+        display: block;
+        position: relative;
+    }
+    .navlinks.responsive .res-menu {
+      position: absolute;
+      right: 0;
+      top: 8px;
+    }
+    .navlinks.responsive a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+}
 
 /* Page: New Game */
 
@@ -254,10 +285,30 @@ tr:nth-child(n+2):hover {
 .ng-info {
 	border: black 2px solid;
 	background: lightskyblue;
-	padding: 12px 25px;
+    width: 100%;
+    padding: 12px 25px;
 	margin-bottom: 20px;
 	font-size: 1.1em;
 	border-radius: 4px;
+}
+
+.ng-info__title {
+    margin-bottom: 10px;
+}
+
+.ng-info__cat {
+    margin-bottom: 5px;
+}
+
+.ng-info__cat--header {
+    cursor: pointer;
+    margin-bottom: 5px;
+    outline: none;
+}
+
+.ng-info__cat--text {
+    margin-left: 5px;
+    text-indent: 20px;
 }
 
 .ng-info>div {
@@ -475,7 +526,7 @@ th {
 	justify-content: space-between;
 	width: 85%;
 	height: 65px;
-	margin: 15px 0px;
+	margin: 40px 0px;
 	font-size: 1.25em;
 }
 
@@ -942,9 +993,6 @@ th {
 }
 
 @media (max-width: 800px) {
-	.content-container {
-		margin-top: 105px;
-    }
     .content {
         width: 90%;
     }
@@ -980,7 +1028,7 @@ th {
 		flex-direction: column;
 	}
 	.navlinks {
-		justify-content: space-evenly;
+		justify-content: space-between;
 	}
 	#form-bottom {
 		display: flex;
@@ -1075,5 +1123,8 @@ th {
     }
     .form-btn:hover {
         background-color: gray;
+    }
+    .navbar {
+        flex-direction: row;
     }
 }
