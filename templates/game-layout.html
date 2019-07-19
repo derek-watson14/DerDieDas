@@ -39,6 +39,9 @@
                     navlinks.className = 'navlinks';
                 }
             }
+            function nav_look(x) {
+                x.classList.toggle("change");
+            }
             let user_id = JSON.parse(' {{ user|tojson|safe }} ');
             let record, game;
             if (!localStorage.getItem("savedGame")) {
