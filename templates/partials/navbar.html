@@ -1,23 +1,29 @@
-    <div class="navbar-container">
-        <div class="navlinks">
-            <a class="navlogo" href="{{ url_for('about') }}">
-                <span class="logoder">Der</span><span class="logodie">Die</span><span class="logodas">Das</span>
-            </a>
-            <a id="about" href="{{ url_for('about') }}">About</a>
-            <a id="new-game" href="{{ url_for('newGame') }}">New Game</a>
-            {% if session["current_gametype"] %}
-            <a id="current-game" href="{{ url_for('run_game', gametype=session['current_gametype']) }}">Game</a>
-            {% elif session["results"] %}
-            <a id="results" href="{{ url_for('results') }}">Results</a>
-            {% endif %}
-            {% if session["user_id"] %}
-            <a id="profile" href="{{ url_for('profile') }}">Profile</a>
-            <a id="profile" href="{{ url_for('logout') }}">Logout</a>
-            {% else %}
-            <a id="login" href="{{ url_for('login') }}">Login</a>
-            {% endif %}
-            <a href="javascript:void(0);" class="res-menu" onclick="nav_thing()">Menu</a>
+        <nav>
+            <div class="navbar-container">
+                <div class="navlinks">
+                    <a class="navlogo" href="{{ url_for('about') }}">
+                        <span class="logoder">Der</span><span class="logodie">Die</span><span class="logodas">Das</span>
+                    </a>
+                    <a id="about" href="{{ url_for('about') }}">About</a>
+                    <a id="new-game" href="{{ url_for('newGame') }}">New Game</a>
+                    {% if session["current_gametype"] %}
+                    <a id="current-game" href="{{ url_for('run_game', gametype=session['current_gametype']) }}">Game</a>
+                    {% elif session["results"] %}
+                    <a id="results" href="{{ url_for('results') }}">Results</a>
+                    {% endif %}
+                    {% if session["user_id"] %}
+                    <a id="profile" href="{{ url_for('profile') }}">Profile</a>
+                    <a id="profile" href="{{ url_for('logout') }}">Logout</a>
+                    {% else %}
+                    <a id="login" href="{{ url_for('login') }}">Login</a>
+                    {% endif %}
+                    <!-- <a href="javascript:void(0);" class="res-menu" onclick="nav_thing()">Menu</a> -->
+                    <a href="javascript:void(0);" class="res-menu" onclick="nav_thing(); nav_look(this);">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </a>
+                </div>
             </div>
-        </div>
-      </nav>
+        </nav>
     </div>
