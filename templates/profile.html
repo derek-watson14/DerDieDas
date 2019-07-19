@@ -5,7 +5,6 @@
 {% block content %}
   <div class="content-container">
     <div class="content profile-content">
-      <h5 class="page-head">Profile Page: '{{ session["username"] }}'</h5>
       <div id="profile-menu">
         <div id="profile-top">
             <div id="profile-user">
@@ -18,6 +17,7 @@
                     <p>The table below contains a full record of the questions you have answered. 
                         You can see how many times you've answered each question and the percentage of times you 
                         were correct. Use this information to focus on your weaker questions </p>
+                    <br>
                     <p>Note: The table is sortable by it's headers.</p>
                 </div>
             </div>
@@ -41,9 +41,11 @@
                 <form id="profile-form">
                     <div id="form-top"> 
                         <p>Maximum display score: </p>
-                        <input type="range" min="0" max="100" value="100"
-                                            class="myslider" id="sliderRange"> 
-                        <div>Score: <span id="demo"></span></div>
+                        <div>
+                            <input type="range" min="0" max="100" value="100"
+                            class="myslider" id="sliderRange"> 
+                            <div>Score: <span id="demo"></span></div>
+                        </div>
                     </div>
                     <div id="form-bottom">
                         <div id="gametype-filter">
